@@ -1,0 +1,57 @@
+/* clase.css */
+
+/* record -------------------------------------- */
+
+#num_clase, #total_clases  { width:3em; }
+#id, #id_curso, #num_semana, #dia_semana, #fecha, #hora_inicio, #duracion, #hora_fin { width:8em; }
+#id_trabajador, #id_materia { width:18em; }
+#sesion { height:20em; }
+
+.record fieldset *[readonly=true] { background-color:#ddd !important; }
+
+div.expandable { margin-bottom:1em; }
+
+
+/* columns -------------------------------------- */
+
+.columns { display:table; width:100%; }
+.column { display:table-cell; vertical-align:top; }
+
+/* browse --------------------------------------- */
+
+.browse li>* {
+  font-style:normal;
+  padding:0 .5em;
+}
+.browse li>img+code { /* num_clase / total_clases */
+  color:#060;
+}
+.browse li>img+code em {
+  font-weight:bold;
+}
+.browse li>em { /* id_curso, materia */
+  color:#050;
+}
+.browse li>em+code { /* num_semana */
+  color:#004;
+}
+.browse li>span { /* fecha */
+  text-align:right;
+}
+.browse li>span+code { /* duración */
+  color:#006;
+}
+.browse li>strong { /* id_trabajador */
+}
+
+/* list groups ---------------------------------- */
+
+#list img { width:16px; height:16px; }
+#list_futuro img { background:url(icons/square_future.png) no-repeat; }
+#list_presente img  { background:url(icons/square_now.png) no-repeat; }
+#list_reciente img { background:url(icons/square_yes.png) no-repeat; }
+#list_pasado img { background:url(icons/square.png) no-repeat; }
+
+/* */
+
+

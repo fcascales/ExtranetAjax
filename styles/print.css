@@ -1,0 +1,119 @@
+/* fonts ---------------------------------------- */
+
+@font-face {
+  font-family:fertigo;
+  src:url(fonts/fertigo.otf);
+}
+
+/* hide */
+
+#jump, #login, #languages, #banners, #msg, #nav, #icon, #panel,
+#pathway, #search, #member, #shadow, #tools, #background {
+  display:none;
+}
+
+/* */
+
+body {
+  background:#fff;
+  color:#000;
+  margin:0;
+  padding:0;
+  font:100% times, serif;
+}
+
+h1, h2 {
+  font-family:fertigo,serif,times;
+}
+a {
+  color:#000;
+  text-decoration:none;
+}
+table {
+  border-collapse:collapse;
+}
+table td, table th {
+  border:1px solid #aaa;
+}
+
+#head {
+}
+#head a, #foot a {
+  text-decoration:none;
+  color:#000;
+  border:none;
+}
+
+#logo {
+  background:#fff url(imgs/bn_logo60.jpg) no-repeat;
+  float:left;
+  width:60px;
+  height:60px;
+  margin-right:1em;
+  border:none;
+}
+#logo a {
+  border:none;
+  text-decoration:none;
+}
+#logo img {
+  display:none;
+  border:none;
+  background:#fff;
+}
+#title h1 {
+  font-family:fertigo,serif,times;
+  margin:0; padding:0;
+  font-size:1.5em;
+  line-height:1em;
+}
+#slogan p {
+  font-family:fertigo,serif,times;
+  margin:0; padding:0;
+  font-weight:bold;
+  font-size:1.1em;
+  font-style:italic;
+  color:#888;
+}
+
+
+#container {
+  clear:both;
+}
+#container h1 {
+  border-bottom:3px double #aaa;
+}
+#container a[href]:after {
+ content:" (" attr(href) ")";
+ color:#666;
+ text-decoration:none;
+ font-family:sans,helvetica,verdana,arial;
+ font-size:small;
+}
+#container img.foto:after {
+  content: attr(alt);
+  font-family:sans,helvetica,verdana,arial;
+  color:#666;
+  font-size:small;
+}
+#foot {
+  text-align:right;
+}
+#foot, #foot a {
+  color:#444;
+}
+
+
+
+.article h1 {
+  margin-bottom: 0;
+}
+.meta {
+  list-style:none; padding:0; margin:0;
+  font-size:.8em;
+}
+.meta li {
+  display:inline;
+}
+
+/* */

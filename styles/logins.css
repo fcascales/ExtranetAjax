@@ -1,0 +1,21 @@
+/* logins */
+
+.table tr:not(.header):nth-child(odd) { /* filas impares */
+  background-color:#eee;
+}
+.table tr:not(.header):nth-child(even) { /* filas pares */
+  background-color:#dde;
+}
+.table td {
+  padding:2px 8px;
+}
+
+.table td:nth-child(even) {
+  color:#040;
+}
+
+.table td:nth-child(5), .table td:nth-child(6) {
+  text-align:right;
+}
+
+/* */

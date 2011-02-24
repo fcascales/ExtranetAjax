@@ -1,0 +1,67 @@
+/* index.css */
+
+.box h2 {
+  line-height:24pt;
+  margin:0;
+  color:#fff;
+}
+
+#index1.buttons li:first-child{
+  font-size:1.3em;
+}
+
+#msg { margin-bottom:3em; /* Cuando vienen pestañas*/ }
+
+/* .box.buttons --------------------------------- */
+
+.box.buttons ul {
+  list-style:none;
+  margin:0; padding:0;
+}
+.box.buttons li {
+  line-height:3em;
+}
+
+/* .box.index ----------------------------------- */
+
+.box.index {
+  margin-bottom:1.5em;
+}
+.box.index ul {
+  list-style-image:url(famfamfam/bullet_green.png);
+  padding:0 0 0 2em;
+}
+.box.index li {
+  margin-bottom:.5em;
+}
+.box.index a:after {
+  content:" → ";
+  font-size:1.5em;
+  line-height:0;
+}
+
+
+/* pending table -------------------------------- */
+
+#pending span:after { content:" "; }
+#pending .field_tipo:before { content:"tiene "; color:#666; }
+#pending .field_hora:before { content:"de "; color:#666; }
+#pending .field_hora_fin:before {  content:"a "; color:#666; }
+#pending .field_asunto { display:block; color:#664; margin-bottom:.5em; }
+#pending .field_fecha { display:none; }
+
+/* search --------------------------------------- */
+
+#search {
+  position:absolute;
+  top:1em; left:550px;
+}
+
+/* aviso ---------------------------------------- */
+
+#aviso {
+  float:left; margin:2em .5em;
+  /*clear:both; padding-top:3em;*/
+}
+
+/* */

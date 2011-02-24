@@ -1,0 +1,18 @@
+/* socios_nuevos.css */
+
+#socios_nuevos table { border-collapse:collapse; }
+#socios_nuevos tr:not(.header) td { border-bottom:1px solid #ccc; }
+#socios_nuevos tr:not(.header):nth-child(odd) { background-color:rgba(0,0,0,0.05); }
+#socios_nuevos th { font-weight:normal; font-size:.8em; color:#666; }
+#socios_nuevos td { padding:.5em; }
+#socios_nuevos a:visited { color:#66c; }
+
+#socios_nuevos tr > *:first-child { display:none; }
+
+.field_id_socio { color:#999; font-size:.8em; }
+.field_socio { font-weight:bold; }
+.field_correo { color:#366; }
+.field_telefono_particular, .field_telefono_trabajo { color:#636; }
+.field_fecha_alta { color:#666; }
+
+#help { clear:both; padding:2em 0 0 2em;  }

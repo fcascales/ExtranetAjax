@@ -1,0 +1,84 @@
+/* trabajador.css */
+
+#notas {
+  height:10em;
+}
+
+/* columns -------------------------------------- */
+
+.columns {
+  display:table; width:100%;
+}
+.column {
+  display:table-cell; vertical-align:top;
+}
+
+/* list ----------------------------------------- */
+
+#list {
+  width:500px;
+}
+
+#list h2 {
+  clear:both;
+  float:left;
+}
+
+
+/* pills ---------------------------------------- */
+
+.pills.expandable.shrink {
+  height:4em;
+}
+
+.pills ul {
+  list-style:none;
+  margin:0 0 1em 0; 
+  padding:1em;  
+  float:left;
+  background:url(imgs/nav.png);
+  border-top:#666 solid 1px;
+  border-right:#eee solid 1px;
+  border-bottom:#eee solid 1px;
+  border-left:#666 solid 1px;
+  border-radius:12px; -moz-border-radius:12px; -webkit-border-radius:12px;
+  box-sizing:border-box; -moz-box-sizing:border-box; -webkit-box-sizing:border-box; 
+}
+
+.pills li {
+  float:left;
+  font-size:1em;
+  padding:.5em 1em;  margin:.5em;  
+  border-radius:24px; -moz-border-radius:24px; -webkit-border-radius:24px;
+  box-shadow:2px 2px 6px #66c; -moz-box-shadow:2px 2px 6px #66c; -webkit-box-shadow:2px 2px 6px #66c;
+  background:#ccc url(imgs/bright.png) repeat-x;
+  user-select:none; -moz-user-select:none; -khtml-user-select:none; 
+  cursor:pointer;
+}
+.pills li:hover {
+  box-shadow:0 0 12px #000; -moz-box-shadow:0 0 12px #000; -webkit-box-shadow:0 0 12px #000;  
+  background-image:none;
+} 
+
+.pills sup {
+  color:#666;
+  font-size:.8em;
+  padding-left:.5em;
+}
+
+#list_habitual li:nth-child(1) { font-size:1.8em; }
+#list_habitual li:nth-child(2) { font-size:1.8em; }
+#list_habitual li:nth-child(3) { font-size:1.4em; }
+#list_habitual li:nth-child(4) { font-size:1.4em; }
+#list_habitual li:nth-child(5) { font-size:1.4em; }
+#list_habitual li:nth-child(6) { font-size:1.2em; }
+#list_habitual li:nth-child(7) { font-size:1.2em; }
+#list_habitual li:nth-child(8) { font-size:1.2em; }
+#list_habitual li:nth-child(9) { font-size:1.2em; }
+#list_habitual li:nth-child(10) { font-size:1.2em; }
+
+.pills li.off { font-size:0.9em; }
+
+/* */
+
+

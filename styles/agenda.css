@@ -1,0 +1,66 @@
+/* logins */
+
+#ayuda {
+  float:left; 
+  margin-right:1em;
+}
+#legenda {
+  float:right;
+}
+#legenda span {
+  margin-left:1em;
+}
+#legenda span:before {
+  content:"=";
+}
+
+#search {
+  margin-bottom:1em;
+}
+
+.table td {
+  text-align:left;
+}
+
+.table tr {
+  background-position:5px center;
+}
+.table tr:not(.header):nth-child(odd) { /* filas impares */
+  background-color:#eee;
+}
+.table tr:not(.header):nth-child(even) { /* filas pares */
+  background-color:#dde;
+}
+.table tr:not(.header):hover {
+  background-color:#ffa !important;
+}
+
+.table td {
+  padding:4px 8px;
+}
+
+
+.table .field_id {
+  font-size:0;
+}
+.table .field_nombre {
+  font-weight:bold;
+  padding-left:30px;
+}
+.table .field_telefono a {
+   color:#040;
+}
+.table .field_correo {
+   color:#040;
+}
+.table .field_referencia {
+  color:#400;
+}
+
+.table a {
+  border:none;
+}
+
+
+
+/* */

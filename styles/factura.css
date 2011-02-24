@@ -1,0 +1,77 @@
+/* factura */
+
+/* icon ----------------------------------------- */
+
+#icon_revisado {
+  position:absolute;
+  width:32px; height:32px;
+  top:80px; left:32px;
+}
+#icon_revisado.yes { background-image:url(crystalclear/agt_action_success.png); }
+#icon_revisado.no  { background-image:url(crystalclear/button_cancel.png); }
+
+#id_factura.yes {
+  background-image:url(icons/square_yes.png);
+  background-repeat:no-repeat;
+  background-position:top right;
+}
+#id_factura.no {
+  background-image:url(icons/square_no.png);
+  background-repeat:no-repeat;
+  background-position:top right;
+}
+
+/* record --------------------------------------- */
+
+#id, #id_factura, #fecha_factura { width:9em; }
+#id_factura { font-weight:bold; }
+#id_curso option.yes { color:#868; }
+#cmd_code, #cmd_charge, #cmd_calc  { font-size:.8em; }
+#horas, #precio_hora, #subtotal, #total_retencion, #total_iva, #total { width:10em; }
+#retencion, #iva { width:5em; }
+#encabezado { height:15em; }
+#detalle, #pie { height:3em; }
+#lnk_curso { font-size:.8em; margin-left:1em; }
+#lnk_auto { font-size:.8em; }
+
+/* columns -------------------------------------- */
+
+/*.columns {
+  display:table; width:100%;
+}
+.column {
+  display:table-cell; vertical-align:top;
+}*/
+
+/* browse --------------------------------------- */
+
+.browse li * { padding:0 4px; }
+
+/* monedas */
+.browse li code:after { content:"€"; color:#666; }
+.browse li code { text-align:right;  color:#008; }
+
+/* list groups ---------------------------------- */
+
+#list img { width:16px; height:16px; }
+#list_pendiente img { background:url(icons/square_no.png) no-repeat; }
+#list_cobrado img  { background:url(icons/square_yes.png) no-repeat; }
+#list_oculta img { background:url(icons/square.png) no-repeat; }
+
+/* grid ----------------------------------------- */
+
+.grid input[name=id_factura] { width:6em; color:#466;  }
+.grid input[name=id_curso] { width:6em; }
+.grid input[name=detalle] { width:16em; }
+.grid input[name=vencimiento] { width:8em; }
+.grid input[name=horas] { width:5em; text-align:right; padding-right:20px; }
+.grid input[name=subtotal], .grid input[name=precio_hora],
+.grid input[name=importe], .grid input[name=cobrado], .grid input[name=diferencia] {
+  width:6em; text-align:right; padding-right:20px;
+}
+.grid input[name=cobrado] { color:#484; }
+.grid input[name=diferencia] { color:#844; }
+.grid tfoot { text-align:right; }
+.grid tfoot td[name] { text-align:center; }
+
+/* */

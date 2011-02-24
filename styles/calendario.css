@@ -1,0 +1,173 @@
+/* calendario.css */
+
+.box {
+  padding-bottom:3em;
+}
+
+.box h1:first-child a {
+  border-bottom:none;
+  padding:0 .5em;
+}
+
+/* columns -------------------------------------- */
+
+.columns {
+  display:table;
+}
+.column {
+  display:table-cell;
+  padding:0 4em 0 0;
+}
+
+/* weeks ---------------------------------------- */
+
+
+.weeks {
+  display:table;
+  user-select:none; -moz-user-select:none; -khtml-user-select:none;
+  border-collapse:collapse;
+}
+
+.weeks ul {
+  display:table-row;
+  list-style:none;
+  margin-padding:none;
+}
+
+.weeks li {
+  display:table-cell;
+  /*border:1px solid #ccc;*/
+  padding:2px 4px;
+  text-align:center;
+  background:#ddd url(imgs/bright.png) no-repeat 2px 0;
+  box-sizing:border-box; -moz-box-sizing:border-box; -webkit-box-sizing:border-box;
+}
+
+.weeks ul:not(.header) {
+ cursor:pointer;
+}
+
+/* celdas de encabezado */
+.weeks .header li {
+  background:#aaa;
+  font-size:.8em;
+  padding:0 6px;
+}
+
+/* celdas de encabezado del fin de semana */
+.weeks .header li.weekend {
+  background:#caa;
+}
+
+/* Nº de día que es sábado o domingo */
+.weeks ul:not(.header) li:nth-last-child(2),
+.weeks ul:not(.header) li:nth-last-child(3) {
+  color:#a00;
+}
+
+/* Celdas de días cuando el ratón está encima de la semana */
+.weeks .week:hover li:nth-child(2),
+.weeks .week:hover li:nth-child(3),
+.weeks .week:hover li:nth-child(4),
+.weeks .week:hover li:nth-child(5),
+.weeks .week:hover li:nth-child(6),
+.weeks .week:hover li:nth-child(7),
+.weeks .week:hover li:nth-child(8)  {
+  background:#ff8 url(imgs/crystal.png);
+  /*box-shadow:1px 1px 4px #fff; -moz-box-shadow:1px 1px 4px #fff; -webkit-box-shadow:1px 1px 4px #fff;
+  border:1px solid #fff;*/
+}
+
+/* Celda del lunes */
+.weeks .week li:nth-child(2) {
+  border-left:1px solid #666;
+}
+
+/* Celdas del número de semana de la semana seleccionada */
+.weeks ul.selected li:first-child {
+  background:#000;
+  color:#fff;
+}
+
+/* Celda del nº de semana cuando el ratón está encima de la semana */
+.weeks ul:not(.header):hover li:first-child {
+  background:#444;
+  color:#fff;
+}
+
+/* Celda de días cuando está el ratón encima */
+.weeks ul.week li:nth-child(2):hover,
+.weeks ul.week li:nth-child(3):hover,
+.weeks ul.week li:nth-child(4):hover,
+.weeks ul.week li:nth-child(5):hover,
+.weeks ul.week li:nth-child(6):hover,
+.weeks ul.week li:nth-child(7):hover,
+.weeks ul.week li:nth-child(8):hover  {
+  /*border:1px solid #000;*/
+  background:#fff;
+  font-weight:bold;
+  line-height:1em;
+}
+
+/* Celdas de la semana  */
+.weeks li:first-child {
+  background:#aaa;
+  text-align:right;
+  color:#555;
+}
+
+/* Celdas del mes */
+.weeks ul li:last-child {
+  background:none;
+  text-align:left;
+  border-left:1px solid #666;
+  font-weight:bold; line-height:1em;
+}
+
+/* Celdas del mes no vacías */
+.weeks li.odd:last-child, .weeks li.even:last-child {
+  background-image:url(imgs/bright.png);
+  background-repeat:repeat-x;
+  border-top:1px solid #666;
+  border-right:1px solid #666;
+  border-bottom:1px solid #666;
+  border-left:none;
+}
+
+/* Celdas de encabezado de la semana y del mes  */
+.weeks .header li:first-child, .weeks .header li:last-child {
+  visibility:hidden;
+}
+
+/* Celdas de meses impares */
+.weeks .week li.odd {
+  background-color:#cde; /*ada 9ba*/
+  color:#234;
+}
+
+/* Celdas de meses pares */
+.weeks .week li.even {
+  background-color:#cbd; /*dbd cbd*/
+  color:#324;
+}
+
+/* semana actual  */
+.weeks .week li.current {
+  background-color:#44a;
+  color:#ccf;
+}
+/* día actual */
+.weeks .week li.today {
+  font-weight:bold;
+  line-height:1em;
+  color:#00f;
+}
+
+/* bordes de separación entre meses */
+.weeks .week .north { border-top:1px solid #666; }
+.weeks .week .west  { border-right:1px solid #666; }
+.weeks .week .south { border-bottom:1px solid #666; }
+.weeks .week .east  { border-left:1px solid #666; }
+
+
+/* */

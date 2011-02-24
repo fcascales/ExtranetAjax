@@ -1,0 +1,15 @@
+/* festivos */
+
+.grid input[name=id] {
+  width:4em;
+  text-align:center;
+}
+.grid input[name=fecha] {
+  width:8em;
+  text-align:center;
+}
+.grid *[name=descripcion] {
+  width:25em;
+}
+
+/* */

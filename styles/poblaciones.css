@@ -1,0 +1,15 @@
+/* festivos */
+
+.grid input[name=id_poblacion] {
+  width:4em;
+  text-align:center;
+}
+.grid input[name=poblacion] {
+  width:16em;
+}
+.grid input[name=provincia] {
+  width:14em;
+}
+
+
+/* */

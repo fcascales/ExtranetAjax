@@ -1,0 +1,46 @@
+/* logins */
+
+#search {
+  margin-bottom:1em;
+}
+
+.table td {
+  text-align:right;
+}
+
+.table tr:not(.header):nth-child(odd) { /* filas impares */
+  background-color:#eee;
+}
+.table tr:not(.header):nth-child(even) { /* filas pares */
+  background-color:#dde;
+}
+.table td {
+  padding:2px 8px;
+}
+
+.table td:nth-child(1),
+.table td:nth-child(5) {
+  font-weight:bold;
+}
+
+.table td:nth-child(3) {
+  color:#040;
+}
+.table td:nth-child(4) {
+  color:#400;
+}
+.table td:nth-child(2):after,
+.table td:nth-child(3):after,
+.table td:nth-child(4):after {
+  content:"€";
+  color:#664;
+}
+.table td:nth-child(6) {
+  text-align:left;
+}
+
+.table tr.falta td:nth-child(5) {
+  color:#f00;
+}
+
+/* */

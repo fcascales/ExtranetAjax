@@ -1,0 +1,42 @@
+/* tareas */
+
+#search {
+  margin-bottom:1em;
+}
+
+.grid input[name=id_cita] {
+  width:4em;
+  text-align:center;
+}
+.grid input[name=id_usuario] {
+  width:6em;
+}
+.grid input[name=prioridad] {
+  width:5em;
+  text-align:center;
+}
+.grid input[name=fecha_tarea] {
+  width:8em;
+  text-align:center;
+}
+.grid input[name=tarea] {
+  width:35em;
+}
+.grid input[name=acabada] {
+  width:2em;
+  text-align:center;
+}
+.grid input[name=acabada_dropdown] {
+  width:5em;
+  text-align:center;
+}
+
+#grid tbody tr td input[value=0] {
+  background:#f00 url(icons/my_delete.png) no-repeat;
+}
+#grid tbody tr td input[value=-1] {
+  background:#0f0 url(icons/my_ok.png) no-repeat;
+}
+
+
+/* */

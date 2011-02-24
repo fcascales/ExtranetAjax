@@ -1,0 +1,29 @@
+/* festivos */
+
+.grid input[name=id_cita] {
+  width:4em;
+  text-align:center;
+}
+.grid input[name=fecha] {
+  width:8em;
+  text-align:center;
+}
+.grid input[name=hora] {
+  width:5em;
+  text-align:center;
+}
+.grid input[name=duracion] {
+  width:5em;
+  text-align:center;
+}
+.grid input[name=usuario] {
+  width:6em;
+}
+.grid input[name=tema] {
+  width:15em;
+}
+.grid input[name=titulo] {
+  width:35em;
+}
+
+/* */

@@ -1,0 +1,184 @@
+/* curso.css */
+
+/* DB.Record ------------------------------------ */
+
+#notas { height:10em; }
+#id_curso { font-weight:bold; }
+#id, #id_curso { width:10em; }
+#curso { height:3em; font-weight:bold; }
+#id_contacto { color:#466; width:15em; }
+#num_apuntes, #total_horas { width:5em; }
+#fecha_inicio, #fecha_fin  { width:8em; }
+#hora_inicio, #hora_fin { width:5em; }
+#duracion { width:3em; color:#666; }
+#precio_hora_cliente, #precio_hora {  width:8em; }
+#retencion, #iva { width:5em; }
+#total_horas { margin-bottom:.5em; }
+
+#cmd_code, #cmd_autocalc, #cmd_autoremove, #cmd_precios_cliente { font-size:.8em; }
+#lnk_auto { font-size:.8em; }
+
+div.expandable { margin-bottom:2em; }
+
+/* subcampos */
+
+.record .somefields { padding:0; }
+.record .somefields li { display:inline; }
+.record .somefields label { content:": "; color:#666; }
+.record .somefields label:after { content:": "; }
+/*.record .somefields li label:before {
+  content:"←";
+  font-size:2em;
+  line-height:.5em;
+}*/
+
+#weekdays {
+  padding-bottom:.5em;
+}
+#weekdays ul {
+  display:table-row;
+  border-collapse:collapse;
+}
+#weekdays li {
+  display:table-cell;
+  border:1px dotted #aaa;
+}
+#weekdays li:hover {
+  background:#eee;
+}
+#weekdays li label {
+  display:block;
+  padding-left:.5em;
+
+}
+#weekdays li:nth-last-child(1),
+#weekdays li:nth-last-child(2) {
+  color:#f66;
+}
+#weekdays li label:before {
+  content:"";
+}
+
+/* DB.Table: precios_cliente -------------------- */
+
+#grupo_precios_cliente { float:right; }
+
+.field_ultimo_curso, .field_num_cursos {
+  background:#fef;
+  font-size:8pt;
+  white-space:nowrap;
+}
+
+/* columns -------------------------------------- */
+
+.columns { display:table; width:100%; }
+.column { display:table-cell; vertical-align:top; }
+
+/* anchos --------------------------------------- */
+
+#record {}
+#detail { min-width:500px; }
+#list { min-width:400px; }
+
+/* Interface.Tabs ------------------------------- */
+
+/*#tabs_statistics ul {
+  padding-top:1em;
+  padding-left:5em;
+  opacity:.8;
+}*/
+.tabs2 {
+  margin-bottom:.5em;
+}
+
+.buttons.attach {
+  margin:4em;
+}
+
+/* buttons & links ------------------------------ */
+
+#lnk_clase:after, #lnk_alumno:after {
+  content:"→";
+  font-size:2em;
+  line-height:1em;
+}
+#lnk_clase { margin-left:2em;  }
+#lnk_alumno { }
+
+/* DB.Table: facturas y estadisticas ------------ */
+
+#detail .table { margin-bottom:1em; }
+#detail .table tr:not(.header):not(.total):not(.subtotal):not(.subsubtotal):hover { background-color:#eed; }
+#detail .table td { padding:.5em; }
+#detail .table tr.total { background-color:#bba; opacity:.9; }
+#detail .table tr.subtotal { background-color:#ccb; opacity:.8; }
+#detail .table tr.subsubtotal { background-color:#ddc; opacity:.7; }
+
+#detail .table tr.ok .field_estado { color:#080; }
+#detail .table tr.falta .field_estado { color:#800; }
+
+#detail .field_id_factura,
+#detail .field_trabajador { text-align:left; /*font-weight:bold;*/ }
+#detail .field_fecha { text-align:center; }
+#detail .field_año,
+#detail .field_mes { text-align:center; color:#262; }
+#detail .field_num_clases { text-align:right; color:#666; }
+#detail .field_horas { color:#644; text-align:right; }
+#detail .field_subtotal:after,
+#detail .field_total:after { content:"€"; color:#886; }
+#detail .field_precio,
+#detail .field_iva,
+#detail .field_retencion { font-size:.8em; }
+#detail .field_precio,
+#detail .field_subtotal { color:#466; text-align:right; }
+#detail .field_iva,
+#detail .field_retencion,
+#detail .field_total { color:#646; text-align:right; }
+#detail .field_id { color:#646; font-size:.8em; }
+#detail .field_id a { color:#646; border:none; }
+#detail .field_alumno { font-weight:bold; text-align:right; }
+#detail .field_telefonos { color:#444; }
+#detail .field_correos a { color:#44c; border:none; }
+
+/* DB.List browse ------------------------------- */
+
+/* monedas */
+.browse li code:after { content:"€"; color:#666; }
+.browse li code { text-align:right; color:#060; white-space:nowrap; }
+.browse li code+code {  color:#008; }
+.browse li code+code+code {  color:#800; }
+
+/* list groups */
+
+#list img { width:16px; height:16px; padding:0 !important; }
+#list_nuevo img { background:url(icons/square_future.png) no-repeat; }
+#list_actual img  { background:url(icons/square_now.png) no-repeat; }
+#list_pendiente img { background:url(icons/square_no.png) no-repeat; }
+#list_acabado img { background:url(icons/square_yes.png) no-repeat; }
+
+/* DB.Grid -------------------------------------- */
+
+#materias { min-width:400px; }
+
+.grid input[name=num_clase], .grid input[name=total_clases] { width:2em; text-align:center; }
+.grid input[name=id_curso] { width:6em; color:#466;  }
+.grid input[name=id_materia] { width:8em; }
+.grid input[name=id_trabajador] { width:6em; }
+.grid input[name=hora_inicio] { width:5em; text-align:center; }
+.grid input[name=horas], .grid input[name=duracion] { width:5em; text-align:center; }
+.grid input[name=dia_label] { width:3em; text-align:center; }
+.grid input[name=fecha_inicio], .grid input[name=fecha] { width:8em; text-align:center; }
+.grid tfoot td { text-align:right; }
+.grid tfoot td[name=duracion] { text-align:center }
+
+/* PRN (print box) ------------------------------ */
+
+#prn { padding:4px; }
+#prn * { margin:0; padding:0; }
+#prn ul { list-style:none; }
+#prn textarea { width:20em; }
+#prn h4 { float:right; }
+
+/* */
+
+

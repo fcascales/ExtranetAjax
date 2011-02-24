@@ -1,0 +1,30 @@
+/* socio.css */
+
+/* DB.Record ------------------------------------ */
+
+#id { width:8em; }
+#nombre, #apellidos { font-weight:bold; }
+#poblacion { width:15em; }
+#nif, #nacimiento, #telefono_particular, #telefono_trabajo, #num_colegiado { width:10em; }
+#edad, #cp, #ano_licenciatura, #residente, #ano_inicio_residencia { width:5em; }
+#titulo_mfic, #via_mir, #propietario_plaza { margin-left:1em; }
+#notas { height:5em; }
+input[name="id_grupo_dropdown"] { width:20em; }
+
+div.expandable { margin-bottom:1em; }
+
+/* DB.Grid -------------------------------------- */
+
+#grupos_socios { min-width:200px; }
+
+.grid input[name=id_alumno] { width:6em; color:#466;  }
+.grid input[name=id_curso] { width:6em; }
+.grid input[name=fila], .grid input[name=columna] { width:2em; }
+
+/* DB.List -------------------------------------- */
+
+
+
+/* */
+
+

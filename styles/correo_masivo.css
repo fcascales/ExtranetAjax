@@ -1,0 +1,68 @@
+/* correo_masivo.css */
+
+h2 { margin:0; }
+
+/* DB.Record ------------------------------------ */
+
+#id           { }
+#destinatario { color:#006; background-color:#eef; /*height:6em; overflow:visible; white-space:nowrap;*/ }
+#asunto       { color:#033; background-color:#eff; display:inline; }
+#adjunto      { color:#060; background-color:#efe; display:none; }
+#mensaje      { }
+
+#cmd_send { font-weight:bold; }
+
+div.expandable { margin-bottom:1em; }
+
+/* DB.Grid -------------------------------------- */
+
+/* DB.List -------------------------------------- */
+
+#list code { color:#999; }
+#list em { width:18em; font-size:.8em; font-style:normal; color:#006; }
+#list strong { width:15em; font-size:.8em; font-weight:normal;  }
+
+#list .si { color:#090; font-weight:bold; }
+#list .no { color:#900;  }
+
+/* Help ----------------------------------------- */
+
+#help { width:200px; }
+#help h3 { margin:1em 0;  }
+#help p { padding-left:1em; }
+#help b { background:#fff; }
+
+/* DIV popup ------------------------------------ */
+
+#popup { max-width:600px; min-width:400px; }
+#popup fieldset { background:rgba(255,255,255,0.8); border:1px solid rgba(0,0,0,0.2); }
+#popup ul { margin-top:0; margin-bottom:0; }
+
+#popup fieldset:nth-child(1) { background:rgba(240,240,255,0.8); }
+#popup fieldset:nth-child(2) { background:rgba(240,255,255,0.8); }
+#popup fieldset:nth-child(3) { background:rgba(240,255,240,0.8); }
+#popup fieldset:nth-child(4) { background:rgba(255,255,255,0.8); }
+
+#correo_destinatario, #correo_adjunto {  list-style-type:none; margin:0; padding:0; }
+#correo_destinatario li, #correo_adjunto li { display:inline; white-space:nowrap; }
+#correo_destinatario li:after, #correo_adjunto li:after { content:" | "; color:#ccc; white-space:normal; }
+
+
+#correo_mensaje h1,
+#correo_mensaje h2,
+#correo_mensaje h3 {
+  text-shadow:none;
+  font-family:"Times New Roman", serif;
+  margin:1em 0;
+  color:#000;
+  font-weight:bold;
+}
+#correo_mensaje a {
+  text-decoration:underline;
+  color:#00f;
+  border:none;
+}
+
+/* */
+
+

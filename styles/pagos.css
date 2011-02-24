@@ -1,0 +1,51 @@
+/* pagos */
+
+#search #curso {
+  width:6em;
+}
+
+.grid input[name=id_pago] {
+  width:4em;
+  text-align:center;
+}
+.grid input[name=id_trabajador] {
+  width:6em;
+  color:#000;
+}
+.grid input[name=fecha] {
+  width:8em;
+  text-align:center;
+  color:#000;
+}
+.grid input[name=horas] {
+  width:4em;
+  text-align:right;
+  padding-right:16px;
+  color:#044;
+}
+.grid input[name=id_curso] {
+  width:6em;
+  color:#066;
+}
+.grid input[name=pago] {
+  width:6em;
+  text-align:right;
+  padding-right:16px;
+  color:#400;
+}
+.grid input[name=id_banco_dropdown] {
+  width:8em;
+  padding-right:16px;
+  color:#600;
+}
+.grid input[name=notas] {
+  width:35em;
+  font-size:.9em;
+}
+
+p.required {
+ float:right;
+}
+
+
+/* */

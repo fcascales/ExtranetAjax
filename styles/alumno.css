@@ -1,0 +1,60 @@
+/* alumno.css */
+
+/* DB.Record ------------------------------------ */
+
+#id { width:8em; }
+#alumno, #apellidos { font-weight:bold; }
+#notas { height:5em; }
+
+div.expandable { margin-bottom:1em; }
+
+/* DB.Grid -------------------------------------- */
+
+#alumnos_cursos { min-width:200px; }
+
+.grid input[name=id_alumno] { width:6em; color:#466;  }
+.grid input[name=id_curso] { width:6em; }
+.grid input[name=fila], .grid input[name=columna] { width:2em; }
+
+/* DB.List -------------------------------------- */
+
+.list span {
+  font-style:normal;
+  margin-right:1em;
+  font-size:1.1em;
+}
+
+.list span:nth-child(1) { }
+.list span:nth-child(2) { text-align:right; font-weight:bold; }
+.list span:nth-child(3) { }
+.list span:nth-child(4) { color:#084; }
+
+.list ul {
+  list-style-type:decimal;
+  cursor:pointer;
+}
+
+.list li {
+  user-select:none; -moz-user-select:none; -khtml-user-select:none;
+  padding:.5em;
+  border:1px solid #ddd;
+}
+.list li:nth-child(odd) { background-color:#ded; }
+.list li:nth-child(even) { background-color:#eee; }
+.list li:hover { border:1px solid #880; }
+
+.list li.current { background-color:#fca; /*#ffa*/}
+.list li.deleted { text-decoration:line-through; color:#866; /*opacity:.3;*/ /*filter:alpha(opacity=50);*/ }
+
+.list .status { width:16px; height:16px; }
+
+.list .status { display:block; float:left; background:url(famfamfam/resultset_next.png) no-repeat 2px 2px; }
+.list li.inserted .status { background:url(famfamfam/asterisk_orange.png) no-repeat 2px 2px; }
+.list li.updated .status { background:url(famfamfam/tick.png) no-repeat 2px 2px; }
+.list li.deleted .status {  background:url(famfamfam/cross.png) no-repeat 2px 2px; }
+
+.list .header * { padding-right:1em; color:#888; }
+
+/* */
+
+

@@ -1,0 +1,62 @@
+/*
+  fileuploader.css — http://valums.com/ajax-upload/ — feb-2011
+  Fichero original "/ajax/valums-file-uploader/client/fileuploader.css"
+
+  Cambios:
+    Múltiples
+*/
+
+
+
+.qq-uploader { position:relative; width: 100%; border:1px dotted #ccc; }
+
+/* BUTTON --------------------------------------- */
+
+.qq-upload-button {
+  display:inline-block;
+  border:1px solid #aaa;
+  padding:.3em 1em .1em 1em; margin-bottom:.1em;
+  border-radius:12px; -moz-border-radius:12px; -webkit-border-radius:12px;
+  box-shadow:1px 1px 4px #66f; -moz-box-shadow:1px 1px 4px #66f; -webkit-box-shadow:1px 1px 4px #66f;
+  background:url(imgs/bright.png) repeat-x; color:#009;
+
+}
+.qq-upload-button-hover {
+  border:1px solid #fff;
+  color:#44f;
+  background-color:#eef;
+  box-shadow:2px 2px 6px #fff; -moz-box-shadow:2px 2px 6px #fff; -webkit-box-shadow:2px 2px 6px #fff;
+  text-decoration:underline;
+}
+.qq-upload-button-focus { outline:1px dotted black; }
+
+/* DROP AREA ------------------------------------ */
+
+.qq-upload-drop-area {
+    position:absolute; top:0; left:0; width:100%; height:100%; min-height: 70px; z-index:2;
+    background:#fcc; text-align:center;
+    border-radius:12px; -moz-border-radius:12px; -webkit-border-radius:12px;
+    border:3px double #c99; color:#600;
+}
+.qq-upload-drop-area span {
+    display:block; position:absolute; top: 50%; width:100%; margin-top:-8px; font-size:16px;
+}
+.qq-upload-drop-area-active { background:#F66; }
+
+/* LIST ----------------------------------------- */
+
+.qq-upload-list { margin:15px 35px; padding:0; list-style:disc; }
+.qq-upload-list li { margin:0; padding:0; line-height:15px; font-size:12px;}
+.qq-upload-file, .qq-upload-spinner, .qq-upload-size, .qq-upload-cancel, .qq-upload-failed-text {
+    margin-right: 7px;
+}
+
+.qq-upload-file {}
+.qq-upload-spinner { display:inline-block; background: url("imgs/loading.gif"); width:15px; height:15px; vertical-align:text-bottom; }
+.qq-upload-size, .qq-upload-cancel { font-size:11px; }
+
+
+.qq-upload-failed-text { display:none; }
+.qq-upload-fail .qq-upload-failed-text { display:inline; }
+
+/* */

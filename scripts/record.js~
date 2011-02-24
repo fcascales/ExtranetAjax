@@ -1,0 +1,737 @@
+/* 
+  record.js - proinf.net - agosto-2009
+
+  Clases: 
+    DB.Record - Un formulario para un registro de la BD con Nuevo/Borrar/Guardar
+    DB.List   - Un listado de los registros de la BD (con agrupación e histórico).
+    DB.Table  - Detalle para la edición de varios registros simultáneamente.
+    DB        - Métodos estáticos comunes
+
+  Requiere: prototype.js, extranet.js
+  
+  Ejemplo:
+  
+  var record = new DB.Record('cursos', {comboboxes:{id_trabajador:'trabajadores',id_materia:'materias'}} );
+  var list = new DB.List('cursos', {link_record:record, template:'<li id="#{id_curso}">#{nombre_curso}</li>', urlfilters: ['id_trabajador','id_curso','id_cliente']} );
+*/
+
+/* DB  ========================================== */
+
+var DB = { // static class
+  url: '/lib/record.php', // Ruta del servidor
+
+  dbLookup: function(id, table, callback) { // Obtiene un único valor 
+    this.callback = callback;
+    var parameters = {
+      cmd: 'lookup',
+      table: table,
+      id: id
+    };
+    Extranet.request(parameters, function(json) { // value
+      if (json.ok == true) {
+        this.callback(json.value);  
+      }
+      else {
+        Msg.flashError('Error al buscar', json.message);
+      }
+    }.bind(this), DB.url);
+  }
+
+};
+
+/* RECORD  ====================================== */
+
+DB.Record = Class.create({ // Gestión de una ficha referida a un único registro de una tabla de la BD
+  /*  
+    Ej: new DB.Record('cursos', {comboboxes:{id_trabajador:'trabajadores',id_materia:'materias'}} );
+  */    
+  initialize: function(table, options) {
+    this.table = table;     
+    
+    // Options
+    options = options || {};
+    this.id = options.id || Util.queryString('id') || null; // null si es una nueva ficha
+    this.idRecord = options.idRecord || 'record';  // Elemento DOM que muestra el formulario de la ficha
+    this.onValidate = options.onValidate || undefined; // Después de mostrar un registro existente o nuevo. Parámetros: fields
+    this.comboboxes = options.comboboxes || {}; // <option> de los <select> a partir de la BD
+    this.commands = options.commands || {new:'cmd_new', save:'cmd_save', delete:'cmd_delete'};
+    this.link_list = options.link_list || undefined; // Enlace con DB.List
+       
+    // Link to list
+    if (this.link_list != undefined) this.link_list.link_record = this;
+    
+    // Events
+    var observe = function(cmd, listener) { if ($(cmd) != null) $(cmd).observe('click', listener); }
+    observe($(this.commands['new']), this.cmd_new.bindAsEventListener(this));
+    observe($(this.commands['save']), this.cmd_save.bindAsEventListener(this));
+    observe($(this.commands['delete']), this.cmd_delete.bindAsEventListener(this));
+    
+    // Automatic
+    this.do_checkboxes(); // Cambia la propiedad value cuando cambia la propiedad checked
+    this.do_dirty(); // Marca con la clase 'dirty' los campos que han cambiado
+
+    // Comboboxes    
+    for(var id in this.comboboxes) {
+      this.dbCombobox(id, this.comboboxes[id]);
+    }        
+  
+    // Show
+    if (this.id != null) { this.dbGet(this.id); }
+    else { this.formClear();  }
+  },
+  
+  // Utilities ----------------------------------
+
+  do_checkboxes: function() { // Al picar un checkbox modificar su propiedad value a true o false
+    $(this.idRecord).select('input[type=checkbox]').each(function(element) {
+      element.value = '';
+      element.observe('click', function(event) {
+        this.value = this.checked;  // false, true
+      });
+    });
+  },
+  
+  do_dirty: function() { // Al cambiar el contenido de un campo lo marca con la clase 'dirty'
+    $(this.idRecord).select('*[name]').each(function(element) {
+      element.observe('change', function(event) {
+        this.addClassName('dirty');
+      });
+    });
+  },
+  
+  isNew: function() {
+    return this.id==null;
+  },
+
+  // listen events ------------------------------ 
+
+  cmd_new: function(event) {
+    Event.stop(event);
+    this.formClear();   
+  },
+  cmd_save: function(event) {
+    Event.stop(event);
+    if (this.id == null) { this.dbInsert(); } 
+    else { this.dbUpdate(); }
+  },
+  cmd_delete: function(event) {
+    Event.stop(event);    
+    if (this.id == null) { this.formClear(); }
+    else {
+      if (confirm('¿Borrar "'+$F('id')+'"?')) {
+        this.dbDelete();
+      }
+    }
+  },  
+
+  // select -------------------------------------
+  
+  dbAutocalc: function(id, table) { // Obtiene un registro y actualiza los <input> según los nombres de campo
+    if (id == '') return;
+    var parameters = {
+      cmd: 'get',
+      table: table,
+      id: id
+    };
+    Extranet.request(parameters, function(json) { // fields
+      if (json.ok == true) {
+        for(var field in json.fields) {
+          var id = $(field);
+          if (id != null) {
+            id.value = json.fields[field];
+          }
+        }
+      }
+    }, DB.url);
+  },
+  
+  dbCombobox: function(id, table) { // Rellena un combobox de la BD.
+  // Relación entre elementos y campos: <optgroup label="group"><option value="id">label</option>...
+  // TODO: Poder añadir un filtro al resultado 
+    var parameters = {
+      cmd: 'combobox',
+      table: table,
+      combobox: id
+    };
+    Extranet.request(parameters, function(json) { // ok, list[{id,label,group}], message
+      if (json.ok == true) {
+        $(json.combobox).childElements().invoke('remove');
+        $(json.combobox).insert(new Element('OPTION', {value:''}));
+        var optgroups = {};
+        for (var i=0; i<json.list.length; ++i) {
+          var fields = json.list[i];
+          if (fields.group == undefined) {            
+            $(json.combobox).insert(new Element('OPTION', {value:fields.id}).update(fields.label));
+          }
+          else { // Con grupos
+            var optgroup = optgroups[fields.group];
+            if (optgroup == undefined) { 
+              optgroup = new Element('OPTGROUP', {label:fields.group});
+              optgroups[fields.group] = optgroup;
+              $(json.combobox).insert(optgroup);
+            }
+            optgroup.insert(new Element('OPTION', {value:fields.id}).update(fields.label));
+          }
+        }
+        $(json.combobox).value = 0;
+      }
+      else {
+        Msg.error('Error en combobox', json.message);
+      }
+    }, DB.url);
+  },
+  
+  // util form -----------------------------------
+  // private
+  
+  change_id: function(id) {
+    if (this.link_list != undefined) this.link_list.itemCurrent(id); 
+    this.id = id;        
+  },
+  
+  formReset: function() {
+    $(this.idRecord).select('.error').invoke('removeClassName','error');
+    $(this.idRecord).select('.dirty').invoke('removeClassName','dirty');
+    $(this.idRecord).select('.date').each(function(element){  Validate.attr_date(element); });
+  },
+  
+  getFields: function(options) { // Obtiene los campos del formulario para insertar o actualizar la BD
+    var hash = options.hash || false; // url encoded or hashed array
+    var dirty = options.dirty || false; // changed elements or all elements    
+    var result = hash? {} : '';  
+    
+    if (dirty) { // Sólo los elementos que han cambiado
+      /*fields = Form.serialize($(this.idRecord), true); // hash
+      dirty_names = $(this.idRecord).select('.dirty').collect(function(element){ return element.name; });
+      for (var field in fields) { if (dirty_names.include(field) == false) fields[field] = undefined; }*/            
+      $(this.idRecord).select('.dirty').each(function(element) {
+        if (hash) result[element.name] = element.value;
+        else result += (result==''?'':'&') + encodeURIComponent(element.name) + '=' + encodeURIComponent(element.value);
+      });           
+    }
+    else { // todos los elementos
+      result = Form.serialize($(this.idRecord), hash);
+    }
+    return result;
+  }, // getFields
+  
+  // form ---------------------------------------
+ 
+  formShow: function(fields) { // Añade los campos al formulario
+  
+    // Internal functions
+    check_checkbox = function(field) {
+     if (/*$(field).tagName == 'INPUT' &&*/ $(field).readAttribute('type') == 'checkbox') {
+        // value puede ser: '', 'false', 'true', '0', '-1', '1',
+        if ($(field).value.toLowerCase() == 'false') $(field).checked = false;
+        else if ($(field).value.toLowerCase() == 'true') $(field).checked = true;  
+        else $(field).checked = parseInt($(field).value, 10) != 0;
+      }
+    }
+    
+    this.change_id(fields['id']);
+    for (var field in fields) {
+      if ($(field) != null) {
+        $(field).value = fields[field];
+        check_checkbox(field);
+      }
+    }
+    this.formReset();
+    
+    // Fire event
+    if (this.onValidate != undefined) this.onValidate(fields); 
+    
+  }, // formReset
+
+  formClear: function() { // Borra el formulario    
+    check_checkbox = function (element) {
+      if (/*$(element).tagName == 'INPUT' &&*/ $(element).readAttribute('type') == 'checkbox') { 
+        element.checked = false;
+      }
+    }
+    
+    this.change_id (null);
+    $('id').value = '';
+    $(this.idRecord).select('*').each(function(element,index) { 
+      if (element.readAttribute('name') != null) {  
+        element.value = '';
+        check_checkbox(element);
+      }
+    });    
+    for (var filter in this.filters) { // Añadir como valor predeterminado el de los filtros
+      $(filter).value = this.filters[filter];
+    }  
+    this.formReset();  
+    
+    // Fire event
+    if (this.onValidate != undefined) { this.onValidate(null); } // this.getFields({dirty:false, hash:true})
+    
+  }, // formClear
+
+  // permanence  --------------------------------
+
+  dbGet: function(id) { // Obtiene un único registro de la BD    
+    if (id == null) return;    
+    var parameters = {
+      cmd: 'get',
+      table: this.table,
+      id: id
+    };
+    Extranet.request(parameters, function(json) { // ok, fields, message
+      if (json.ok == true) {
+        this.formShow(json.fields);
+      }
+      else {
+        Msg.error('Error al seleccionar', json.message);
+      }
+    }.bind(this), DB.url);
+  },
+  
+  dbInsert: function() { // Inserta un registro en la BD
+    var fields = this.getFields({dirty:true, hash:false});
+    if (fields == '') return Msg.flashWarning('No hay campos que insertar');
+    
+    var parameters = {
+      cmd: 'insert',
+      table: this.table,
+      fields: fields
+    };
+    
+    Extranet.request(parameters, function(json) { // ok, fields, message
+      if (json.ok == true) {
+        var id = json.fields['id'];
+        Msg.flashOk('Ha sido insertado', id);
+        if (json.fields) {
+          this.formShow(json.fields);
+          if (this.link_list != undefined) {
+            this.link_list.dbItem(id);
+          }
+        }        
+      }
+      else {
+        Msg.flashError('Error al insertar', json.message);
+      }
+      if (json.verbose) Msg.info(json.verbose);
+    }.bind(this), DB.url);
+  },
+
+  dbUpdate: function() { // Actualiza un registro en la BD    
+    var fields = this.getFields({dirty:true, hash:false});
+    if (fields == '') return Msg.flashWarning('No hay campos que actualizar');
+    
+    var parameters = { 
+      cmd: 'update',
+      table: this.table,
+      id: this.id,
+      fields: fields
+    };
+    Extranet.request(parameters, function(json) { // ok, fields, message
+      if (json.ok == true) {
+        var id = json.fields['id'];
+        Msg.flashOk('Ha sido actualizado ', id);
+        if (json.fields) {
+          this.formShow(json.fields);
+          if (this.link_list != undefined) {
+            this.link_list.itemChangeId(json.id, id);
+            this.link_list.dbItem(id);
+          }
+        }        
+      }
+      else {
+        Msg.flashError('Error al actualizar', json.message);
+      }
+      if (json.verbose) Msg.info(json.verbose);
+    }.bind(this), DB.url);
+  },
+
+  dbDelete: function() {
+    var parameters = {
+      cmd: 'delete',
+      table: this.table,
+      id: this.id
+    };
+    Extranet.request(parameters, function(json) { // ok, message
+      if (json.ok == true) {
+        Msg.flashOk('Ha sido borrado '+json.id);        
+        this.formClear();
+        if (this.link_list != undefined) {
+          //this.link_list.listExtract(this.id);
+          this.link_list.itemClass(id, 'deleted');
+        }
+      }
+      else {
+        Msg.flashError('Error al borrar', json.message);
+      }
+      if (json.verbose) Msg.info(json.verbose);
+    }.bind(this), DB.url);
+  }
+  
+}; // DB.Record
+
+
+
+
+
+
+
+
+/* LIST ========================================= */
+
+DB.List = Class.create({ // Gestión de un listado de la BD personalizado 
+
+  /* 
+    Ej: new DB.List('cursos', { template:'<li id="#{id_curso}">#{nombre_curso}</li>', urlfilters: ['id_trabajador','id_curso','id_cliente'] } );
+  */    
+  initialize: function(table, options) { // TODO: Reescribir como clase y parecido a Ajax.Autocompleter
+    this.table = table; 
+    
+    // Options
+    options = options || {};
+    this.id = options.id || Util.queryString('id') || null; // null si no hay ningún elemento seleccionado
+    this.idList = options.idList ||  'list'; // Elemento DOM que muestra el listado
+    this.prefix = options.prefix || (this.table + '_'); // Prefijo al ID de los elementos de la lista
+    this.template = options.template || '<li id="#{id}">#{id}</li>'; // Prototype Template
+    this.commands = options.commands || { list:'cmd_list', historic:'cmd_historic' };
+    this.filters = options.filters || {}; // Hash de los filtros con el nombre del campo y su valor
+    this.urlfilters = options.urlfilters || []; // Array con los nombres de párametros URL que hacen de filtro
+    this.afterItem = options.afterItem || undefined; // Tras añadir un elemento a la lista. Parámetros: element, fields
+    this.clickItem = options.clickItem || undefined; // Al hacer clic en la lista. Parámetros: element, fields
+    this.link_record = options.link_record || undefined; // Enlace con DB.Record
+    
+    // Ajustar id de la plantilla
+    this.template = this.template.replace('id="#{id}"', 'id="'+this.prefix+'#{id}"');
+    this.ITEM_TEMPLATE = new Template(this.template);
+    
+    // Elemento actual
+    this.itemCurrent(this.id);
+
+    // Link to record
+    if (this.link_record != undefined) { this.link_record.link_list = this; }
+
+    // Historic
+    //var getFirstElement = function(selector) { return $(this.idList).select(selector)[0]; }
+    var observe = function(cmd, listener) { if ($(cmd) != null) $(cmd).observe('click', listener); }
+    observe(this.commands['list'], this.cmd_list.bindAsEventListener(this));
+    observe(this.commands['historic'], this.cmd_historic.bindAsEventListener(this));  
+    
+    // Filters
+    if (this.urlfilters != undefined) {
+      for(var i=0; i<this.urlfilters.length; ++i) {
+        this.addURLFilter(this.urlfilters[i]); 
+      }
+    }
+    
+    // List
+    this.dbList(); 
+  }, 
+ 
+  // listen events ------------------------------ 
+  
+  cmd_list: function(event) {
+    Event.stop(event);
+    this.dbList();
+  },
+  cmd_historic: function(event) {
+    Event.stop(event);
+    this.dbHistoric();
+  },
+ 
+  // utilities ----------------------------------
+ 
+  addURLFilter: function(filter) { // Ej: '...?id_curso=E-01-09' --> { id_curso:'E-01-09' }
+    var value = Util.queryString(filter);
+    if (value != null) {
+      this.filters[filter] = value;
+    }
+  },
+  
+  // select -------------------------------------
+  
+  dbItem: function(id) { // Recupera un único elemento de la lista y actualiza ese elemento
+    var parameters = {
+      cmd: 'list',
+      table: this.table,
+      id: id
+    };
+    Extranet.request(parameters, function(json) { // ok, fields, message
+      if (json.ok == true) {
+        this.itemPut(json.fields, {single:true});
+        this.itemCurrent(json.fields['id']);
+      }
+      else {
+        Msg.error('Error elemento', json.message);
+      }
+    }.bind(this), DB.url);
+  }, // dbItem
+    
+  dbHistoric: function() {
+    this.dbList('historic');
+  },
+
+  dbList: function(historic) { // Obtiene toda la lista de la BD
+  // El parámetro historic sirve para ampliar los datos originales, ver el histórico        
+    var parameters = {
+      cmd: 'list',
+      table: this.table,
+      filters: Object.toQueryString(this.filters)
+    };
+    if (historic != undefined) { 
+      this.historic = historic; 
+      parameters['historic'] = historic;
+    }
+    //// for (var filter in this.filters) { parameters[filter] = this.filters[filter];  }
+    Extranet.request(parameters, function(json) { // ok, list[fields], message
+      if (json.ok == true) {
+        if (this.historic == '') { // Borrar los elementos previos 
+          $(this.idList).select('li[id]').invoke('stopObserving').invoke('remove'); 
+        }
+        this.counters = {};
+        for (var i=0; i<json.list.length; ++i) {
+          var fields = json.list[i];
+          this.itemPut(fields);
+        }
+        for (var group in this.counters) { // Mostrar el número de regs. en el elemento que encabeza la lista
+          var counter = this.counters[group];
+          var title = $(this.idList+'_'+group).previous();
+          if (title != null) title.update(group.capitalize()+' <var>'+counter+'</var>');
+        }
+        if ($('subtitle') != null && json.labels != undefined) { // Poner las etiquetas de filtros en el subtítulo de la página
+          var subtitle = '';
+          for (var key in json.labels) {
+            subtitle += '<span>' + json.labels[key] + '</span>';
+          }
+          $('subtitle').update(subtitle).show();
+        }
+      }
+      else {
+        Msg.error('Error al listar', json.message);
+      }
+    }.bind(this), DB.url);
+    
+  }, // dbList
+  
+  // items --------------------------------------
+  
+  itemGet: function(id) { // Obtiene un elemento de la lista
+    return $(this.prefix + id);
+  },
+  
+  itemCurrent = function (id) { // Marca o desmarca un elemento de la lista como actual
+    var setClassCurrent = function(id, ok) {
+      var item = this.itemGet(id);
+      if (item != null) {
+        if (ok) item.addClassName('current');
+        else item.removeClassName('current');
+      }
+    }//.bind(this);
+    setClassCurrent(this.id, false);
+    setClassCurrent(this.id = id, true);
+  },
+  
+  itemRemove: function(id) { // Elimina un elemento de la lista
+    var item  = this.itemGet(id);
+    if (item != null) item.stopObserving().remove();
+  },
+  
+  itemClass: function(id, css_class) { // '', 'inserted', 'deleted', 'updated'
+    item = this.itemGet(id);
+    if (item != null) item.addClassName(css_class);
+  },
+  
+  itemChangeId: function(old_id, new_id) { // Cambia el id de un elemento
+    var old_item = this.itemGet(old_id);
+    if (old_item != null) old_item.writeAttribute('id', this.prefix + new_id);
+  },
+  
+  itemPut: function(fields, options) { // Añade un elemento a la lista o lo actualiza si ya estaba    
+    var single = options.single || false; // Es un elemento individual o forma parte de un listado
+    var list = $(this.idList);
+    var item = this.itemGet(fields['id']); 
+    var type = single?(item==null?'inserted':'updated'):'';
+    
+    // Group items    
+    if (fields.group != undefined) {
+      var sublist = $(this.idList+'_'+fields.group);
+      if (sublist != null) {
+        list = sublist;
+        if (this.counters[fields.group] == undefined) this.counters[fields.group] = 0;
+        this.counters[fields.group]++;
+      }
+    }
+
+    // Añadirlo o actualizarlo al DOM
+    var html = this.ITEM_TEMPLATE.evaluate(fields);
+    if (item == null) {
+      var position = single?'top':'bottom';
+      list.insert(html, position);
+      item = this.itemGet(fields['id']); 
+    }
+    else {
+      list.update(html);    
+    }
+    this.itemClass(fields['id'], type);    
+        
+    // Enlace con DB.Record
+    if (this.link_record != undefined) { 
+      item.link_list = this;
+      item.observe('click', function(event) {
+        var id = this.getAttribute('id').substr(this.link_list.prefix.length); 
+        this.link_list.link_record.dbGet(id);
+      });
+    }
+    
+    // Pulsar en el elemento (TODO: Probar a ver si funciona)
+    if (this.clickItem != undefined) {
+      item.clickItem = this.clickItem;
+      item.fields = fields;
+      item.observe('click', function(event) {
+        this.clickItem(this, this.fields);
+      });
+    }
+      
+    // Fire event
+    if (this.afterItem != undefined) this.afterItem(item, fields); 
+    
+  } // itemPut
+
+}); // DB.List
+
+
+
+
+
+
+
+
+/* Table ========================================  */
+
+DB.Table = Class.create({
+  
+  /*
+    Ej: var table = new DB.Table('precios_cliente',$('precios_cliente'))
+        table.show();
+  */
+  initialize: function(request, target, options) { // var table = 
+    this.request = request; // Comando a enviar para recuperar los datos de la tabla
+    this.target = $(target); // id de destino  en el DOM
+    this.count = 0;
+    
+    options = options || {};    
+    this.tags = options.tags || ['TABLE','TR','TD','TH']; //  ['UL','LI','SPAN','STRONG']
+    this.filters = options.filters || {};
+    this.header = options.header || true;
+    this.onClick = options.onClick || undefined;
+    this.editable = options.editable || false;
+    
+    ////this.target.hide();
+  },
+  
+  //---------------------------------------------
+  // Getters & setters
+  
+  getCount: function() { return this.count;  },  
+  getTarget: function() { return this.target; },
+  
+  //---------------------------------------------
+  // Base
+  
+  tableRemove: function() {
+    var element= this.target.down();
+    if (element != null) {
+      element.childElements().invoke('stopObserving').invoke('remove');
+      element.remove();
+    }
+    this.count = 0;
+    ////this.target.hide();
+  },
+  
+  tableMake: function (list, tags) { // Crea una tabla. tags ['UL','LI','SPAN','STRONG']
+    if (tags == undefined) tags = this.tags;
+    this.count = list.length;
+    var table = new Element(tags[0]); // TABLE
+    if (this.header && list.length > 0) {
+      var fields = list[0];
+      var header = new Element(tags[1], {class:'table_header'}); // TR
+      for (var field in fields) {
+        var cell = new Element(tags[3]).update(field); // TH
+        header.insert(cell);
+      }
+      table.insert(header);
+    }
+    for (var i=0; i<list.length; ++i) {
+      var fields = list[i];
+      var row = new Element(tags[1]); // TR
+      for (var field in fields) {
+        var cell = new Element(tags[2], {class:'field_'+field}).update(fields[field]); // TD
+        row.insert(cell);
+      }      
+      table.insert(row); 
+      if (this.onClick != undefined) {
+        row.link_table = this;
+        row.observe('click',this.cmd_click);
+      }
+    } 
+    this.target.insert(table);
+    ////this.target.show();  
+  }, 
+
+  //---------------------------------------------
+  // static methods (no necesita this)
+  
+  row_to_fields: function(row)  { // Convierta las etiquetas <td> en campos enumerables
+    var fields = {};
+    var cells = row.childElements();
+    for (var i=0; i<cells.length; ++i) {
+      var cell = cells[i];
+      var field = cell.className.substring(6); // 'field_'
+      var content = cell.innerHTML;
+      fields[field] = content;
+    }    
+    return fields;
+  },
+  
+  //---------------------------------------------
+  // Events
+  
+  cmd_click: function(event) { // Al picar una fila de la tabla. Aquí this es <tr>    
+    //Event.stop(event);
+    var fields = this.link_table.row_to_fields(this);
+    this.link_table.onClick(fields);    
+  },
+  
+  //----------------------------------------------
+  // Public methods
+  
+  toggleData: function(filters) {  // Muestra u oculta los datos de forma alternativa
+    if (this.target.visible()) {
+      this.target.hide();
+    }
+    else {      
+      this.getData(filters);
+      this.target.show();
+    }  
+  },
+
+  getData: function (filters) {  // Ej: table.getData({id_cliente: $F('id_cliente')});
+    if (filters == undefined) filters = this.filters;
+    var parameters = {
+      cmd: 'table',
+      table: this.request,
+      filters: Object.toQueryString(filters)
+    };
+    //// for (var filter in filters) {  parameters[filter] = filters[filter];   }
+    Extranet.request(parameters, function(json) { // ok, list[fields], message
+      this.tableRemove();      
+      if (json.ok == true) {        
+        this.tableMake(json.list);
+      } 
+      else {
+        Msg.error('Error al listar', json.message);
+      }
+    }.bind(this), DB.url);
+  } // getData
+
+}); // DB.Table
+
+
+/* */

@@ -1,0 +1,46 @@
+/* cliente.css */
+
+/* record -------------------------------------- */
+
+#notas {  height:10em; }
+#cliente, #contacto, #correos { height:3em; }
+#cliente { font-weight:bold;}
+
+#lnk_auto { font-size:.8em; }
+
+/* columns -------------------------------------- */
+
+.columns { display:table; width:100%; }
+.column { display:table-cell; vertical-align:top; }
+
+/* browse --------------------------------------- */
+
+#list_habitual li:nth-child(1) { font-size:1.4em; }
+#list_habitual li:nth-child(2) { font-size:1.4em; }
+#list_habitual li:nth-child(3) { font-size:1.2em; }
+#list_habitual li:nth-child(4) { font-size:1.2em; }
+#list_habitual li:nth-child(5) { font-size:1.2em; }
+#list_habitual li:nth-child(6) { font-size:1.1em; }
+#list_habitual li:nth-child(7) { font-size:1.1em; }
+#list_habitual li:nth-child(8) { font-size:1.1em; }
+#list_habitual li:nth-child(9) { font-size:1.1em; }
+#list_habitual li:nth-child(10) { font-size:1.1em; }
+
+/* list groups ---------------------------------- */
+
+#list img { width:16px; height:16px; padding:0 !important; }
+#list_nuevo img { background:url(icons/square_future.png) no-repeat; }
+#list_habitual img  { background:url(icons/square_now.png) no-repeat; }
+#list_antiguo img { background:url(icons/square_yes.png) no-repeat; }
+
+/* DB.Grid -------------------------------------- */
+
+.grid input { text-align:left; }
+.grid input[name=id_contacto] { width:2em; text-align:center; }
+.grid input[name=id_cliente] { width:4em; color:#466;  }
+.grid input[name=contacto] { width:12em; color:#000; /*font-weight:bold;*/ }
+.grid input[name=telefono] { width:8em; color:#655; }
+.grid input[name=correo] { width:14em; color:#448; }
+.grid input[name=cargo] { width:14em; color:#363; }
+
+/* */

@@ -1,0 +1,32 @@
+/* bancos */
+
+.grid input[name=id_banco] {
+  width:4em;
+  text-align:center;
+}
+.grid input[name=banco] {
+  width:16em;
+}
+.grid input[name=cuenta_corriente] {
+  width:14em;
+}
+
+.grid input[name=notas] {
+  width:32em;
+}
+
+/* formas_pago */
+
+#formas_pago input[name=forma_pago] {
+  width:20em;
+}
+#formas_pago input[name=num_vencimientos] {
+  width:6em;
+  text-align:center;
+}
+#formas_pago input[name=dia_pago] {
+  width:10em;
+  text-align:center;
+}
+
+/* */
