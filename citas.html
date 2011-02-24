@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Citas - ProInf.net</title>
+  <link rel="stylesheet" type="text/css" href="styles/styles.css" />
+  <link rel="stylesheet" type="text/css" href="styles/calendar.css" />
+  <link rel="stylesheet" type="text/css" href="styles/citas.css" />
+  <script type="text/javascript" src="lib/prototype.js"></script>
+  <script type="text/javascript" src="lib/extranet.js"></script>
+  <script type="text/javascript" src="lib/record.js"></script>
+  <script type="text/javascript" src="lib/date.js"></script>
+  <script type="text/javascript" src="lib/calendar.js"></script>
+  <script type="text/javascript" src="lib/validate.js"></script>
+  <script type="text/javascript" src="scripts/citas.js"></script>
+  <link href="extranet.ico" rel="shortcut icon" type="image/x-icon" />
+<body>
+<div id="main">
+  <div id="header">
+    <div id="logo"></div>
+    <div id="title">
+      <h1><a href="." title="Ir al índice">Extranet</a>&rarr;Citas</h1>
+      <h2 id="subtitle" style="display:none"></h2>
+    </div>
+    <div id="flash" style="display:none"></div>
+    <div id="connect"><a href="login.html">Conectar</a></div>
+  </div>
+  <div id="msg" class="ok" style="display:none;" ></div>
+  <div id="body" zz_style="display:none">
+
+    <div class="box">
+      <!--div id="search">
+        <input type="text" id="search_input" name="search" autofocus="on" />
+        <span  id="search_indicator" style="display:none;" /></span>
+        <div id="search_choices" class="autocomplete"></div>
+      </div-->
+
+      <div id="search" class="header">
+        <label for="user">Usuario:</label>
+        <select id="user">
+          <option></option>
+          <option>QUIM</option>
+          <option>FCO</option>
+        </select>
+        <label for="year">Año:</label>
+        <select id="year">
+          <option>2008</option>
+          <option>2009</option>
+          <option>2010</option>
+        </select>
+        <label for="month">Mes:</label>
+        <select id="month">
+          <option></option>
+          <option value="1">Enero</option>
+          <option value="2">Febrero</option>
+          <option value="3">Marzo</option>
+          <option value="4">Abril</option>
+          <option value="5">Mayo</option>
+          <option value="6">Junio</option>
+          <option value="7">Julio</option>
+          <option value="8">Agosto</option>
+          <option value="9">Septiembre</option>
+          <option value="10">Octubre</option>
+          <option value="11">Noviembre</option>
+          <option value="12">Diciembre</option>
+        </select>
+      </div>
+
+      <form id="grid" class="grid" action="">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th name="id_cita"></th>
+              <th name="fecha"><span class="down">fecha</span></th>
+              <th name="hora"><span class="down">hora</span></th>
+              <th name="duracion">duración</th>
+              <th name="usuario">usuario</th>
+              <th name="tema">tema</th>
+              <th name="titulo">título</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th></th>
+              <td><input type="hidden" name="id_cita" disabled="true" /></td>
+              <td><input type="text" name="fecha" class="date calendar" /></td>
+              <td><input type="text" name="hora" class="time" /></td>
+              <td><input type="text" name="duracion" class="number" /></td>
+              <td><input type="text" name="usuario" class="dropdown" /></td>
+              <td><input type="text" name="tema" /></td>
+              <td><input type="text" name="titulo" /></td>
+              <th><a href="#">Borrar</a></th>
+            </tr>
+          </tbody>
+        </table>
+        <p class="buttons">
+          <a id="cmd_save" href="#">Guardar</a>
+        </p>
+      </form>
+    </div>
+
+  </div>
+  <div id="footer">
+    <div id="waiting" style="display:none">cargando datos</div>
+    <div id="copyright">ProInf.net &copy; 2009</div>
+  </div>
+</div>
+</body>
+</html>

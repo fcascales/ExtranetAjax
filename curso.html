@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Curso</title>
+  <link rel="stylesheet" type="text/css" href="styles/styles.css" />
+  <link rel="stylesheet" type="text/css" href="styles/curso.css" />
+  <link rel="stylesheet" type="text/css" href="styles/calendar.css"  />
+  <script type="text/javascript" src="lib/prototype.js"></script>
+  <script type="text/javascript" src="lib/extranet.js"></script>
+  <script type="text/javascript" src="lib/record.js"></script>
+  <script type="text/javascript" src="lib/color.js"></script>
+  <script type="text/javascript" src="lib/date.js"></script>
+  <script type="text/javascript" src="lib/calendar.js"></script>
+  <script type="text/javascript" src="lib/validate.js"></script>
+  <script type="text/javascript" src="scripts/curso.js"></script>
+  <link href="extranet.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body>
+<div id="main">
+  <div id="header">
+    <div id="logo"></div>
+    <div id="title">
+      <h1><a href="." title="Ir al índice">Extranet</a>&rarr;Curso</h1>
+      <h2 id="subtitle" style="display:none"></h2>
+    </div>
+    <div id="flash" style="display:none"></div>
+    <div id="connect"><a href="login.html">Conectar</a></div>
+  </div>
+  <div id="msg" class="ok" style="display:none;" ></div>
+  <div id="body" zz_style="display:none">
+
+    <div id="tabs" class="tabs">
+      <ul>
+        <li><a href="#" id="tab_record" class="current">Ficha</a></li>
+        <li><a href="#" id="tab_list">Lista</a></li>
+        <li><a href="#" id="tab_all">∞</a></li>
+      </ul>
+    </div>
+
+    <div class="box record tab_record tab_all">
+      <div id="search">
+        <input type="text" id="search_input" name="search" autofocus="on" />
+        <span  id="search_waiting" style="display:none;" ></span>
+        <!--div id="search_choices" class="autocomplete"></div-->
+      </div>
+      <form id="record" class="buttons">
+        <fieldset>
+          <legend  class="curso">Curso</legend>
+          <ul>
+            <li><label for="id">Id</label><input type="text" id="id" class="key" disabled="true" /></li>
+            <li>
+              <label for="id_curso">Código</label>
+              <div>
+                <input type="text" id="id_curso" name="id_curso" />
+                <a id="cmd_code" href="#">Generar</a>
+              </div>
+            </li>
+            <li><label for="curso">Título</label><textarea id="curso" name="curso" ></textarea></li>
+            <li><label for="id_cliente">Cliente</label><select id="id_cliente" name="id_cliente"></select></li>
+            <li><label for="id_contacto">Contacto</label><select id="id_contacto" name="id_contacto"></select></li>
+            <li><label for="id_trabajador">Trabajador</label><select id="id_trabajador" name="id_trabajador"></select></li>
+            <li><label for="num_apuntes">Nº apuntes</label><input type="text" id="num_apuntes" name="num_apuntes" /></li>
+          </ul>
+        </fieldset>
+        <fieldset class="expandable">
+          <legend>Temporalización</legend>
+          <ul>
+            <li>
+              <label for="fecha_inicio">Fechas de</label>
+              <ul class="somefields">
+                <li><input type="text" id="fecha_inicio" name="fecha_inicio" class="date calendar" /></li>
+                <li><label for="fecha_fin">a</label><input type="text" id="fecha_fin" name="fecha_fin" class="date calendar" /></li>
+              </ul>
+            </li>
+            <li><label for="total_horas">Total horas</label><input type="text" id="total_horas" name="total_horas" /></li>
+            <li>
+              <label>Semana</label>
+              <div id="weekdays">
+                <ul>
+                  <li><label for="dilluns">L</label><input type="checkbox" id="dilluns" name="dilluns" title="Lunes" /></li>
+                  <li><label for="dimarts">M</label><input type="checkbox" id="dimarts" name="dimarts" title="Martes" /></li>
+                  <li><label for="dimecres">X</label><input type="checkbox" id="dimecres" name="dimecres" title="Miércoles" /></li>
+                  <li><label for="dijous">J</label><input type="checkbox" id="dijous" name="dijous" title="Jueves" /></li>
+                  <li><label for="divendres">V</label><input type="checkbox" id="divendres" name="divendres" title="Viernes" /></li>
+                  <li><label for="dissabte">S</label><input type="checkbox" id="dissabte" name="dissabte" title="Sábado" /></li>
+                  <li><label for="diumenge">D</label><input type="checkbox" id="diumenge" name="diumenge" title="Domingo" /></li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <label for="hora_inicio">Horas de</label>
+              <ul class="somefields">
+                <li><input type="text" id="hora_inicio" name="hora_inicio" class="time" /></li>
+                <li><label for="hora_fin">a</label><input type="text" id="hora_fin" name="hora_fin" class="time" /></li>
+                <li><input type="text" id="duracion" readonly="true" title="Duración de la clase" /></li>
+              </ul>
+            </li>
+          </ul>
+        </fieldset>
+        <fieldset class="expandable shrink">
+          <legend>Economía</legend>
+          <div id="grupo_precios_cliente">
+            <a id="cmd_precios_cliente" href="#"  title="Consultar de los últimos cursos de este cliente">Consultar</a>
+            <div id="precios_cliente" class="table select popup" style="display:none;"></div>
+          </div>
+          <ul>
+            <li><label for="precio_hora_cliente">Precio/hora cliente</label><input type="text" id="precio_hora_cliente" name="precio_hora_cliente" class="euro" /></li>
+            <li><label for="precio_hora">Precio/hora profesor</label><input type="text" id="precio_hora" name="precio_hora" class="euro" /></li>
+            <li><label for="retencion">Retención</label><input type="text" id="retencion" name="retencion" class="percent" /></li>
+            <li><label for="IVA">IVA</label><input type="text" id="iva" name="iva" class="percent" /></li>
+          </ul>
+        </fieldset>
+        <fieldset class="expandable shrink">
+          <legend>Notas</legend>
+          <textarea id="notas" name="notas"></textarea>
+        </fieldset>
+        <ul class="cmd buttons">
+          <li><a id="cmd_new" href="#">Nuevo</a></li>
+          <li><a id="cmd_save" href="#">Guardar</a></li>
+          <li><a id="cmd_delete" href="#">Borrar</a></li>
+          <li><a id="lnk_print" href="pdf.php?cmd=curso&id=">Informe</a></li>
+          <li><a id="lnk_auto" class="link" href="?id=">Autoenlace</a></li>
+        </ul>
+      </form>
+    </div>
+
+    <div id="prn" class="popup hidden">
+      <h4>Informe</h4>
+      <ul>
+        <li>Trabajador:<br /><input type="text" id="prn_id_trabajador" /></li>
+        <li>Notas:<br /><textarea id="prn_notas"></textarea></li>
+        <li><a id="prn_ok" href="#">Aceptar</a> | <a id="prn_cancel" href="#">Cancelar</a></li>
+      </ul>
+    </div>
+
+    <div id="detail" class="box expandable right tab_record tab_all">
+      <h3>Detalle</h3>
+
+      <div id="tabs_detail" class="tabs">
+        <ul>
+          <li><a id="tab_materias" href="#">Materias</a></li>
+          <li><a id="tab_clases" href="#" class="current">Clases</a></li>
+          <li><a id="tab_alumnos" href="#">Alumnos</a></li>
+          <li><a id="tab_estadisticas" href="#">Estadísticas</a></li>
+        </ul>
+      </div>
+
+      <form id="cursos_materias" class="grid" style="display:none;" >
+        <table>
+          <!--caption>Materias</caption-->
+          <thead>
+            <tr>
+              <th></th>
+              <th name="id_curso_materia"></th>
+              <th name="id_curso"></th>
+              <th name="id_materia">materia</th>
+              <th name="horas">horas</th>
+              <th name="fecha_inicio">fecha</th>
+            </tr>
+          </thead>
+           <tfoot>
+            <tr>
+              <td></td>
+              <td colspan="3"><a id="materias_total" href="">Total:</a></td>
+              <td name="horas">…</td>
+              <td></td>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr>
+              <th></th>
+              <td><input type="hidden" name="id_curso_materia" disabled="true" /></td>
+              <td><input type="hidden" name="id_curso" readonly="true" /></td>
+              <td><input type="text" name="id_materia" class="dropdown" /></td>
+              <td><input type="text" name="horas" class="number" /></td>
+              <td><input type="text" name="fecha_inicio" class="date calendar" /></td>
+              <th><a href="#">Borrar</a></th>
+            </tr>
+          </tbody>
+        </table>
+        <p class="buttons">
+          <a id="materias_save" class="cmd_save" href="#">Guardar</a>
+        </p>
+      </form>
+
+      <form id="cursos_clases" class="grid">
+        <table>
+          <!--caption>Clases</caption-->
+          <thead>
+            <tr>
+              <th></th>
+              <th name="id_clase"></th>
+              <th name="num_clase">nº</th>
+              <th name="total_clases">tot</th>
+              <th name="id_curso"></th>
+              <th>día</th>
+              <th name="fecha"><span class="down">fecha</span></th>
+              <th name="hora_inicio"><span class="down">hora</span></th>
+              <th name="duracion" title="Duración">dur.</th>
+              <th name="id_materia">materia</th>
+              <th name="id_trabajador">trabaj.</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <td></td>
+              <td colspan="7"><a id="clases_total" href="">Total:</a></td>
+              <td name="duracion">…</td>
+              <td colspan="2"></td>
+              <td></td>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr>
+              <th></th>
+              <td><input type="hidden" name="id_clase" disabled="true" /></td>
+              <td><input type="text" name="num_clase" disabled="true" /></td>
+              <td><input type="text" name="total_clases" disabled="true" /></td>
+              <td><input type="hidden" name="id_curso" readonly="true" /></td>
+              <td><input type="text" name="dia_label" disabled="true" readonly="true" /></td>
+              <td><input type="text" name="fecha" class="date calendar" /></td>
+              <td><input type="text" name="hora_inicio" class="time" /></td>
+              <td><input type="text" name="duracion" class="number" /></td>
+              <td><input type="text" name="id_materia" class="dropdown" /></td>
+              <td><input type="text" name="id_trabajador" class="dropdown" /></td>
+              <th><a href="#">Borrar</a></th>
+            </tr>
+          </tbody>
+        </table>
+        <p class="buttons">
+          <a id="clases_save" class="cmd_save" href="#">Guardar</a>
+          <a id="clases_sort" href="#" title="Ordena por fecha y calcula el número de clase">Ordenar</a>
+          <a id="clases_autofill" href="#" title="Calcula las clases a partir de la temporalización">Autorellenar</a>
+          <a id="clases_delete" class="delete" href="#" title="Marca todas las filas para ser borradas">Borrar</a>
+          <a id="lnk_clase" href="clase.html?id_curso=" title="Hoja de horas de la clases">Sesiones</a>
+        </p>
+      </form>
+
+      <div id="alumnos" style="display:none;">
+        <div id="cursos-alumnos" class="table">
+          <p class="buttons attach"><a id="cmd_alumnos" href="#">Cargar alumnos&hellip;</a></p>
+        </div>
+        <p class="buttons">
+          <a id="lnk_alumno" href="alumno.html?id_curso=" title="Fichas de alumnos del curso">Alumnos</a>
+          <a id="lnk_aula" href="pdf.php?cmd=aula&id=" title="Posición en el aula">Aula</a>
+        </p>
+      </div>
+
+      <div id="estadisticas" style="display:none;">
+        <div id="tabs_statistics" class="tabs2">
+          <ul>
+            <li><a id="tab_calendario" href="#">Calendario</a></li>
+            <li><a id="tab_facturas" href="#">Facturas</a></li>
+            <li><a id="tab_trabajadores" href="#">Trabajadores</a></li>
+          </ul>
+        </div>
+        <div id="calendario">
+          <div id="curso-calendario">
+            <p class="buttons attach"><a id="cmd_calendario" href="#">Cargar calendario de clases…</a></p>
+          </div>
+        </div>
+        <div id="facturas" style="display:none;">
+          <div id="cursos-facturas" class="table">
+            <p class="buttons attach"><a id="cmd_facturas" href="#">Cargar estadística de facturas…</a></p>
+          </div>
+        </div>
+        <div id="trabajadores" style="display:none;">
+          <div id="cursos-trabajadores" class="table">
+            <p class="buttons attach"><a id="cmd_trabajadores" href="#">Cargar estadística de trabajadores…</a></p>
+          </div>
+        </div>
+      </div>
+
+    </div><!--detail-->
+
+
+    <div id="list" class="box expandable right tab_list tab_all" style="display:none;">
+      <h3>Lista</h3>
+      <div class="expandable shrink browse">
+        <h2>Nuevo</h2>
+        <ul id="list_nuevo">
+          <li class="header"><b></b><b></b><b>Código</b><b>Curso</b><b>Inicio</b><b>Fin</b><b>Total</b><b>Facturado</b><b>Pendiente</b></li>
+          <!--li id="#{id}"><span class="status"></span><img /><strong>#{id_curso}</strong><em>#{curso}</em><sup>#{inicio}</sup><sub>#{fin}</sub><code>#{total_curso}</code><code>#{total_factura}</code><code>#{total_pendiente}</code></li-->
+        </ul>
+      </div>
+      <div class="expandable browse">
+        <h2>Actual</h2>
+        <ul id="list_actual">
+          <li class="header"><b></b><b></b><b>Código</b><b>Curso</b><b>Inicio</b><b>Fin</b><b>Total</b><b>Facturado</b><b>Pendiente</b></li>
+          <!--li id="#{id}"><span class="status"></span><img /><strong>#{id_curso}</strong><em>#{curso}</em><sup>#{inicio}</sup><sub>#{fin}</sub><code>#{total_curso}</code><code>#{total_factura}</code><code>#{total_pendiente}</code></li-->
+        </ul>
+      </div>
+      <div class="expandable shrink browse">
+        <h2>Pendiente</h2>
+        <ul id="list_pendiente">
+          <li class="header"><b></b><b></b><b>Código</b><b>Curso</b><b>Inicio</b><b>Fin</b><b>Total</b><b>Facturado</b><b>Pendiente</b></li>
+          <!--li id="#{id}"><span class="status"></span><img /><strong>#{id_curso}</strong><em>#{curso}</em><sup>#{inicio}</sup><sub>#{fin}</sub><code>#{total_curso}</code><code>#{total_factura}</code><code>#{total_pendiente}</code></li-->
+        </ul>
+      </div>
+      <div class="expandable shrink browse">
+        <h2 class="buttons">Acabado <a href="#" id="cmd_historic">Histórico</a></h2>
+        <ul id="list_acabado">
+          <li class="header"><b></b><b></b><b>Código</b><b>Curso</b><b>Inicio</b><b>Fin</b><b>Total</b><b>Facturado</b><b>Pendiente</b></li>
+          <!--li id="#{id}"><span class="status"></span><img /><strong>#{id_curso}</strong><em>#{curso}</em><sup>#{inicio}</sup><sub>#{fin}</sub><code>#{total_curso}</code><code>#{total_factura}</code><code>#{total_pendiente}</code></li-->
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <div id="footer">
+    <div id="waiting" style="display:none">cargando datos</div>
+    <div id="copyright">ProInf.net &copy; 2009</div>
+  </div>
+</div>
+</body>
+</html>

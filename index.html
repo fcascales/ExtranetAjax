@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="verify-v1" content="ShYoaaZNNwboWi1xJoA26ra0noTIS0N072b9EzwTfqU=" />
+  <title>Extranet - ProInf.net</title>
+  <link rel="stylesheet" type="text/css" href="styles/styles.css" />
+  <link rel="stylesheet" type="text/css" href="styles/calendar.css" />
+  <link rel="stylesheet" type="text/css" href="styles/index.css" />
+  <script type="text/javascript" src="lib/prototype.js"></script>
+  <script type="text/javascript" src="lib/extranet.js"></script>
+  <script type="text/javascript" src="lib/record.js"></script>
+  <script type="text/javascript" src="lib/date.js"></script>
+  <script type="text/javascript" src="lib/calendar.js"></script>
+  <script type="text/javascript" src="scripts/index.js"></script>
+  <link href="extranet.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body>
+<div id="main">
+  <div id="header">
+    <div id="logo"></div>
+    <div id="title">
+      <h1><a href="." title="Ir al índice">Extranet</a></h1>
+      <h2 id="subtitle" style="display:none"></h2>
+    </div>
+    <div id="flash" style="display:none"></div>
+    <div id="connect"><a href="login.html">Conectar</a></div>
+  </div>
+  <div id="msg" class="ok" style="display:none;" ></div>
+  <div id="body" style="display:none">
+
+    <div id="search" class="boxmargin">
+      <input type="text" id="search_input" name="search" />
+      <span  id="search_waiting" style="display:none;" /></span>
+      <!--div id="search_choices" class="autocomplete">
+        <ul>
+          <li id="id_1" class="trabajador">Trabajador <strong>Am</strong>ancio</li>
+          <li id="id_2" class="curso selected">Curso M<strong>am</strong>bo</li>
+          <li id="id_3" class="factura">Factura G<strong>am</strong>ma</li>
+          <li id="id_4" class="curso">Curso R<strong>am</strong>bo</li>
+          <li id="id_5" class="cliente">Cliente S<strong>am</strong>anta</li>
+        </ul>
+      </div-->
+    </div>
+
+    <div id="tabs" class="tabs">
+      <ul>
+        <li><a href="#" id="inicio" class="current">Inicio</a></li>
+        <li><a href="#" id="tempo">Temporalización</a></li>
+        <li><a href="#" id="bd">Base de datos</a></li>
+        <li><a href="#" id="tools">Utilidades</a></li>
+        <li><a href="#" id="all" title="Todo a la vez">∞</a></li>
+      </ul>
+    </div>
+
+    <div id="index1" class="box index inicio tempo all">
+      <h1>Temporización</h1>
+      <ul class="buttons">
+        <li><a href="horario.html"><span class="horario emphasis">Horario semanal</span></a></li>
+        <li><a href="calendario.html" title="Todas las semanas del año"><span class="calendario">Calendario</span></a></li>
+        <li><a href="citas.html" title="Citas que aparecen en el horario"><span class="cita">Citas</span></a></li>
+        <li><a href="agenda.html" title="Buscar clientes, trabajadores y alumnos"><span class="agenda">Agenda</span></a></li>
+      </ul>
+    </div>
+
+    <div id="index2" class="box index inicio bd all">
+      <h1>Principal</h1>
+      <ul class="buttons">
+        <li><a href="curso.html"><span class="curso emphasis">Cursos</span></a></li>
+        <li><a href="factura.html" ><span class="factura emphasis">Facturas</span></a></li>
+        <li><a href="cliente.html"><span class="cliente">Clientes</span></a></li>
+        <li><a href="trabajador.html"><span class="trabajador">Trabajadores</span></a></li>
+        <!--li><a href="clase.html"><span class="clase">Clases</span></a></li-->
+        <li><a href="pagos.html" title="Pagos a los trabajadores"><span class="pago">Pagos</span></a></li>        
+      </ul>
+    </div>
+
+    <div id="index6" class="box index tempo all">
+      <h2>Pendiente</h2>
+      <div id="pending"><!-- Lista de clases y citas para hoy y mañana --></div>
+    </div>
+
+    <div id="index3" class="box index bd all">
+      <h3>Tablas</h3>
+      <ul>
+        <li><a href="bancos.html">Bancos</a></li>
+        <li><a href="citas.html">Citas</a></li>
+        <li><a href="festivos.html">Festivos</a></li>
+        <li><a href="poblaciones.html">Poblaciones</a></li>
+        <li><a href="tareas.html">Tareas</a></li>
+      </ul>
+    </div>
+
+    <div id="index4" class="box index tools all">
+      <h3>Seguridad</h3>
+      <ul>
+        <li><a href="logins.html">Conexiones</a></li>
+        <!--li><a href="usuarios">Usuarios</a></li-->
+        <li><a href="password.html">Cambiar la contraseña</a></li>
+      </ul>
+    </div>
+
+    <div id="index5" class="box index bd all">
+      <h3>Estadísticas</h3>
+      <ul>
+        <li><a href="statistics1.html">Clases</a></li>
+        <li><a href="statistics2.html">Trabajadores</a></li>
+        <li><a href="statistics3.html">Clientes</a></li>
+        <li><a href="statistics4.html">Facturas</a></li>
+        <li><a href="statistics5.html">Cobros</a></li>
+      </ul>
+    </div>
+
+    <div id="index6" class="box index tools all">
+      <h3>Procedimientos</h3>
+      <ul>
+        <li><a id="cmd_calcular_num_clase" href="#">Calcular nº clase</a></li>
+        <!--li><a id="cmd_migrar_facturas" href="#">Migrar las facturas</a></li-->
+        <li><a id="cmd_backup_database" href="#">Copia de seguridad de la BD</a></li>
+      </ul>
+      <!--a href="phpinfo.php">phpinfo</a-->
+    </div>
+
+    <div id="index7" class="box tempo all">
+      <h2>Almanaque</h2>
+      <!--iframe src="calendar.html" width="280" height="160" scrolling="no" frameborder="0"></iframe-->
+      <div id="calendar"></div>
+      <p><a href="#" id="cmd_time">Hora del servidor</a>: <strong id="time">&hellip;</strong></p>
+    </div>
+
+    <div id="index8" class="box index all">
+      <h3>Otras B.D.</h3>
+      <ul>
+        <li>mundo.banderas:<br />
+          <a href="bandera.html">ficha</a></li>
+      </ul>
+    </div>
+
+    <div id="index9" class="box index tools all">
+      <h3>Plantillas</h3>
+      <ul>
+        <li><a href="proinf_plantilla.ott">proinf_plantilla.ott</a></li>
+      </ul>
+    </div>
+
+
+
+  </div>
+  <div id="footer">
+    <div id="waiting" style="display:none" >cargando datos</div>
+    <div id="copyright">ProInf.net &copy; 2009</div>
+  </div>
+</div>
+</body>
+</html>

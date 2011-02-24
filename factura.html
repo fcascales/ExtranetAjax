@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Factura - ProInf.net</title>
+  <link rel="stylesheet" type="text/css" href="styles/styles.css" />
+  <link rel="stylesheet" type="text/css" href="styles/calendar.css"/>
+  <link rel="stylesheet" type="text/css" href="styles/factura.css" />
+  <script type="text/javascript" src="lib/prototype.js"></script>
+  <script type="text/javascript" src="lib/extranet.js"></script>
+  <script type="text/javascript" src="lib/record.js"></script>
+  <script type="text/javascript" src="lib/color.js"></script>
+  <script type="text/javascript" src="lib/date.js"></script>
+  <script type="text/javascript" src="lib/calendar.js"></script>
+  <script type="text/javascript" src="lib/validate.js"></script>
+  <script type="text/javascript" src="scripts/factura.js"></script>
+  <link href="extranet.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body>
+<div id="main">
+  <div id="header">
+    <div id="logo"></div>
+    <div id="title">
+      <h1><a href="." title="Ir al índice">Extranet</a>&rarr;Factura</h1>
+      <h2 id="subtitle" style="display:none"></h2>
+    </div>
+    <div id="flash" style="display:none"></div>
+    <div id="connect"><a href="login.html">Conectar</a></div>
+  </div>
+  <div id="msg" class="ok" style="display:none;" ></div>
+  <div id="body" zz_style="display:none">
+
+    <div id="tabs" class="tabs">
+      <ul>
+        <li><a href="#" id="tab_record" class="current">Ficha</a></li>
+        <li><a href="#" id="tab_list">Lista</a></li>
+        <li><a href="#" id="tab_all">∞</a></li>
+      </ul>
+    </div>
+
+    <div class="box buttons record tab_record tab_all">
+      <div id="search">
+        <input type="text" id="search_input" name="search" autofocus="on" />
+        <span  id="search_waiting" style="display:none;" /></span>
+        <!--div id="search_choices" class="autocomplete"></div-->
+      </div>
+      <form id="record" action="">
+        <div id="icon_revisado" title="¿La factura está cobrada?"></div>
+        <input type="hidden" id="revisado" name="revisado" />
+        <fieldset>
+          <legend class="factura">Factura</legend>
+          <ul>
+            <li><label for="id">Id</label><input type="text" id="id" class="key" disabled="true" /></li>
+            <li>
+              <label for="id_factura">Nº factura</label>
+              <div>
+                <input type="text" id="id_factura" name="id_factura" class="charge_no" />
+                <a id="cmd_code" href="#">Generar</a>
+                <a id="cmd_charge" href="#">Cobrar</a>
+              </div>
+            </li>
+            <li><label for="fecha_factura">Fecha</label><input type="text" id="fecha_factura" name="fecha_factura" class="date calendar" /></li>
+            <li><label for="id_cliente">Cliente</label><select id="id_cliente" name="id_cliente"></select></li>
+            <li><label for="id_forma_pago">Forma pago</label><select id="id_forma_pago" name="id_forma_pago"></select></li>
+            <li><label for="id_banco">Banco</label><select id="id_banco" name="id_banco"></select></li>
+          </ul>
+        </fieldset>
+        <fieldset class="expandable">
+          <legend>Economía</legend>
+          <ul>
+            <li><label for="subtotal">Subtotal</label><input type="text" id="subtotal" readonly="true"  /></li>
+            <li>
+              <label for="retencion">Retención</label>
+              <div>
+                <input type="text" id="total_retencion" readonly="true" />
+                <input type="text" id="retencion" name="retencion" class="percent" />
+              </div>
+            </li>
+            <li>
+              <label for="iva">IVA</label>
+              <div>
+                <input type="text" id="total_iva" readonly="true" />
+                <input type="text" id="iva" name="iva" class="percent" />
+              </div>
+            </li>
+            <li>
+              <label for="total">Total</label>
+              <div>
+                <input type="text" id="total" readonly="true" />
+                <a id="cmd_calc" href="#">Calcular</a>
+              </div>
+            </li>
+          </ul>
+        </fieldset>
+        <fieldset class="expandable shrink">
+          <legend>Textos</legend>
+          <ul>
+            <li><label for="para">A la atención de</label><input type="text" id="para" name="para"></textarea></li>
+          </ul>
+          <label for="encabezado">Encabezado</label><textarea id="encabezado" name="encabezado"></textarea>
+          <label for="pie">Pie</label><textarea id="pie" name="pie"></textarea>
+        </fieldset>
+        <ul class="cmd">
+          <li><a id="cmd_new" href="#"><span>Nuevo</span></a></li>
+          <li><a id="cmd_save" href="#"><span>Guardar</span></a></li>
+          <li><a id="cmd_delete" href="#"><span>Borrar</span></a></li>
+          <li><a id="lnk_print" href="pdf.php?cmd=factura&id="><span>Imprimir</span></a></li>
+          <li><a id="lnk_auto" class="link" href="?id=">Autoenlace</a></li>
+        </ul>
+      </form>
+    </div>
+
+    <div class="box expandable right tab_record tab_all">
+      <h3>Detalle</h3>
+      <div id="detail" class="tabs">
+        <ul>
+          <li><a href="#" class="current">Cursos</a></li>
+          <li><a href="#">Cobros</a></li>
+        </ul>
+      </div>
+      <form id="cursos" class="grid">
+        <table>
+          <!--caption>Cursos</caption-->
+          <thead>
+            <tr>
+              <th></th>
+              <th name="id_factura_curso"></th>
+              <th><!--id_factura--></th>
+              <th name="id_curso">curso</th>
+              <th name="detalle">detalle</th>
+              <th name="horas">horas</th>
+              <th name="precio_hora">precio</th>
+              <th name="subtotal">subtotal</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <td></td>
+              <td colspan="4"><a id="cursos_total" href="">Total:</a></td>
+              <td name="horas">…</td>
+              <td></td>
+              <td name="subtotal">…</td>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr>
+              <th></th>
+              <td><input type="hidden" name="id_factura_curso" disabled="true" /></td>
+              <td><input type="hidden" name="id_factura" disabled="true" /></td>
+              <td><input type="text" name="id_curso" class="dropdown" /></td>
+              <td><input type="text" name="detalle" /></td>
+              <td><input type="text" name="horas" class="number" /></td>
+              <td><input type="text" name="precio_hora" class="euro" /></td>
+              <td><input type="text" name="subtotal" class="euro" /></td>
+              <th><a href="#">Borrar</a></th>
+            </tr>
+          </tbody>
+        </table>
+        <p class="buttons">
+          <a id="cursos_save" class="cmd_save" href="#">Guardar</a>
+        </p>
+      </form>
+      <form id="cobros" class="grid" style="display:none;">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th name="id_cobro"></th>
+              <th><!--id_factura--></th>
+              <th name="vencimiento">vencimiento</th>
+              <th name="importe">importe</th>
+              <th name="cobrado">cobrado</th>
+              <th>diferencia</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <td></td>
+              <td colspan="3"><a id="cobros_total" href="">Total:</a></td>
+              <td name="importe">…</td>
+              <td name="cobrado">…</td>
+              <td name="diferencia">…</td>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr>
+              <th></th>
+              <td><input type="hidden" name="id_cobro" disabled="true" /></td>
+              <td><input type="hidden" name="id_factura" disabled="true" /></td>
+              <td><input type="text" name="vencimiento" class="date calendar" /></td>
+              <td><input type="text" name="importe" class="euro" /></td>
+              <td><input type="text" name="cobrado" class="euro" /></td>
+              <td><input type="text" name="diferencia" readonly="true" /></td>
+              <th><a href="#">Borrar</a></th>
+            </tr>
+          </tbody>
+        </table>
+        <p class="buttons">
+          <a id="cobros_save" class="cmd_save" href="#">Guardar</a>
+          <a id="cobros_autofill" href="#" title="Rellena el cobro a fecha de hoy">Autorellenar</a>
+        </p>
+      </form>
+    </div>
+
+
+    <div id="list" class="box tab_list tab_all" style="display:none;">
+      <!--h3>Lista</h3-->
+      <div class="expandable browse">
+        <h2>Pendiente </h2>
+        <ul id="list_pendiente">
+          <li class="header"><b></b><b></b><b>Código</b><b>Fecha</b><b>Cursos</b><b>Total</b><b>Cliente</b></li>
+        </ul>
+      </div>
+      <div class="expandable shrink browse">
+        <h2  class="buttons">Cobrado <a href="#" id="cmd_historic">Histórico</a></h2>
+        <ul id="list_cobrado">
+          <li class="header"><b></b><b></b><b>Código</b><b>Fecha</b><b>Cursos</b><b>Total</b><b>Cliente</b></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <div id="footer">
+    <div id="waiting" style="display:none">cargando datos</div>
+    <div id="copyright">ProInf.net &copy; 2009</div>
+  </div>
+</div>
+</body>
+</html>

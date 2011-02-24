@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Horario - ProInf.net</title>
+  <link rel="stylesheet" type="text/css" href="styles/horario.css" />
+  <script type="text/javascript" src="lib/prototype.js"></script>
+  <script type="text/javascript" src="lib/date.js"></script>
+  <script type="text/javascript" src="lib/color.js"></script>
+  <script type="text/javascript" src="scripts/horario.js"></script>
+  <link href="extranet.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body>
+<div id="main">
+
+  <div id="header">
+    <h1><a href="." title="Ir al índice">Horario</a></h1>
+    <p id="skip"><a href="#tasks" title="Skip to content">Saltar al contenido</a></p>
+  </div>
+
+  <div id="nav">
+
+    <ul id="cmd">
+      <li><a id="cmd_prev" href="?cmd=prev" title="Semana anterior"><span>Anterior</span></a></li><li><a id="cmd_next" href="?cmd=next" title="Siguiente semana"><span>Siguiente</span></a></li><li><a id="cmd_requery" href="?cmd=requery" title="Reconsultar semana"><span>Reconsultar</span></a></li>
+    </ul>
+
+    <form id="search" action="">
+      <input type="text" id="input_search" autocomplete="off" autofocus="on" /><input type="submit" id="cmd_search" value="buscar" />
+      <span id="tip_search">RESULT</span>
+    </form>
+
+    <ul id="opt">
+      <li><label for="opt_night">Horas nocturnas:</label><input id="opt_night" type="checkbox" /></li>
+      <li><label for="opt_weekend">Fin de semana:</label><input id="opt_weekend" type="checkbox" /></li>
+    </ul>
+
+  </div>
+
+  <div id="grid">
+
+    <div id="schedule">
+    </div>
+
+    <div id="week" title="Número de semana">
+       semº
+    </div>
+
+    <ul id="hours">
+      <li id="hour0" class="night">00:00</li>
+      <li id="hour1" class="night">01:00</li>
+      <li id="hour2" class="night">02:00</li>
+      <li id="hour3" class="night">03:00</li>
+      <li id="hour4" class="night">04:00</li>
+      <li id="hour5" class="night">05:00</li>
+      <li id="hour6" class="night">06:00</li>
+      <li id="hour7" class="day">07:00</li>
+      <li id="hour8" class="day">08:00</li>
+      <li id="hour9" class="day">09:00</li>
+      <li id="hour10" class="day">10:00</li>
+      <li id="hour11" class="day">11:00</li>
+      <li id="hour12" class="day">12:00</li>
+      <li id="hour13" class="day">13:00</li>
+      <li id="hour14" class="day">14:00</li>
+      <li id="hour15" class="day">15:00</li>
+      <li id="hour16" class="day">16:00</li>
+      <li id="hour17" class="day">17:00</li>
+      <li id="hour18" class="day">18:00</li>
+      <li id="hour19" class="day">19:00</li>
+      <li id="hour20" class="day">20:00</li>
+      <li id="hour21" class="day">21:00</li>
+      <li id="hour22" class="day">22:00</li>
+      <li id="hour23" class="day">23:00</li>
+    </ul>
+
+    <ul id="days">
+      <li id="day0" class="monday"><small>mes año</small> <strong>lunes dia</strong></li>
+      <li id="day1" class="tuesday"><small>mes año</small> <strong>martes dia</strong></li>
+      <li id="day2" class="wednesday"><small>mes año</small> <strong>miércoles dia</strong></li>
+      <li id="day3" class="thursday"><small>mes año</small> <strong>jueves dia</strong></li>
+      <li id="day4" class="friday"><small>mes año</small> <strong>viernes dia</strong></li>
+      <li id="day5" class="saturday weekend"><small>mes año</small> <strong>sábado dia</strong></li>
+      <li id="day6" class="sunday weekend"><small>mes año</small> <strong>domingo dia</strong></li>
+    </ul>
+
+    <ul id="tasks">
+      <!--hCalendar microformat-->
+      <!--
+      <li id="task1001" class="vevent">
+        <div class="summary">Ejemplo 1</div>
+        <div class="description">Texto1</div>
+        <div class="time">de <abbr class="dtstart" title="2009-07-15T11:50:00+01:00">15-jul 11:50</abbr>
+        a <abbr class="dtend" title="2009-07-15T12:30:00+01:00">15-jul 12:30</abbr></div>
+        <div class="calendar">FCO</div>
+        <div class="sequence">1/2</div>
+      </li>
+      <li id="task1002" class="vevent">
+        <div class="summary">Ejemplo 2</div>
+        <div class="description">Texto2</div>
+        <div class="time">de <abbr class="dtstart" title="2009-07-16T16:15:00+01:00">16-jul 16:15</abbr>
+        a <abbr class="dtend" title="2009-07-16T17:30:00+01:00">16-jul 17:30</abbr></div>
+        <div class="calendar">QUIM</div>
+        <div class="sequence">2/2</div>
+      </li>
+      -->
+    </ul>
+
+  </div>
+
+  <div id="footer">
+    <img id="waiting" src="imgs/loader_bar.gif" />
+    <div id="msg" class="ok">Mensaje</div>
+    <div id="copyright">ProInf.net &copy; 2009</div>
+  </div>
+
+  <!--
+  <div id="superdebug"><div id="debug">
+  </div></div>
+  -->
+
+</div>
+</body>
+</html>

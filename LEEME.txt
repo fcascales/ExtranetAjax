@@ -1,0 +1,44 @@
+EXTRANET
+
+Mostrar/Ocultar errores en PHP
+  .htaccess
+
+Las carpetas de la extranet son:
+
+  /       = Las páginas de la extranet y su plantilla
+  backups = Copia de seguridad de la BD
+  lib     = Biblioteca general de Javascript usando Prototype
+  public  = Archivos accedidos desde la web pública con vinculaciones a la extranet
+  scripts = Javascripts individuales de cada página
+  server  = Bibliotecas PHP de la extranet y logs — ProInf.net
+    /config        = Configuración del servidor: BD, SQL y correo
+    /json          = Mensajes en formato JSON — Michal Migurski (pear.php.net)
+    /phpmailer     = Envío de correo electrónico — Andy Prevost (worxware.com)
+    /simplehtmldom = Acceso al DOM del HTML — S.C. Chen (sourceforge.net/projects/simplehtmldom/)
+    /tcpdf         = Creación de PDF — Nicola Asuni (www.tcpdf.org)
+  styles  = Hojas de estilo, fondos, iconos y fuentes
+  zz      = Pruebas varias
+
+Cada página de la extranet consiste en tres archivos:
+  /pagina.php        = Contenido HTML
+  /styles/pagina.css = Diseño CSS
+  /scripts/pagina.js = Programación JS
+
+Todas las páginas de la extranet se basan en la misma plantilla:
+  /template.php
+  /styles/styles.css
+
+Además de esto si la página usa la BD usará:
+  /server/config/sql.php = Incluye todas las sentencias SQL que necesite
+
+Las sentencias AJAX se acceden desde las bibliotecas:
+  /lib/extranet.js = Validación, Mensajes, etc.
+  /lib/record.js   = Todo lo relacionado con la BD
+  /server/private.php = Recoge las peticiones AJAX
+  /server/record.php  = Gestiona las peticiones AJAX
+
+Informes PDF
+  /server/pdf.php = Código de los diferentes informes PDF que se quiere generar
+
+
+
